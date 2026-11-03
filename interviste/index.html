@@ -58,7 +58,7 @@ footer{font-size:11px;color:#648094;padding:0 24px 25px;max-width:1470px;margin:
 <body>
 <header>
   <div><h1>ASSOPOKER <span style="color:#58d0e7">/</span> GALLERY INTERVISTE</h1><p>Generatore editoriale · 4:5 · 1080 × 1350 px</p></div>
-  <span class="tag">VERSIONE 3.0 · LOCALE</span>
+  <span class="tag">VERSIONE 3.1 · LOCALE</span>
 </header>
 
 <main class="layout">
@@ -70,7 +70,11 @@ footer{font-size:11px;color:#648094;padding:0 24px 25px;max-width:1470px;margin:
       <div class="field"><label for="person">Nome intervistato</label><input id="person" type="text" placeholder="Nome e cognome"></div>
       <label class="check"><input type="checkbox" id="upper" checked> Citazioni in MAIUSCOLO</label>
     </div>
-    <div class="notice">Ogni slide ha la propria fotografia. Il testo della citazione si ridimensiona da solo in base alla lunghezza, quindi non serve più sistemarlo a mano. Per evidenziare in azzurro, clicca sulle parole sotto la citazione.</div>
+    <div class="row">
+      <div class="field"><label for="align">Allineamento citazione</label><select id="align"><option value="center">Centrato</option><option value="left">A sinistra</option></select></div>
+      <div class="field"><label>Logo in basso a destra (opzionale)</label><input type="file" id="logo" accept="image/*"> <button class="btn alt" id="logoReset" style="padding:7px 10px;margin-top:6px">Usa quello standard</button></div>
+    </div>
+    <div class="notice">Ogni slide ha la propria fotografia. Il testo della citazione si ridimensiona da solo in base alla lunghezza. Le virgolette di apertura e chiusura vengono aggiunte in automatico: non scriverle. Per evidenziare in azzurro, clicca sulle parole sotto la citazione.</div>
   </div>
 
   <div class="panel">
@@ -137,14 +141,15 @@ footer{font-size:11px;color:#648094;padding:0 24px 25px;max-width:1470px;margin:
 const $ = id => document.getElementById(id);
 const W = 1080, H = 1350;
 const canvas = $('canvas'), ctx = canvas.getContext('2d');
-const NAVY = '#0b3155', DEEP = '#082b4b', CYAN = '#00a5c8', LIGHT = '#b7e5ee', WHITE = '#ffffff';
+const NAVY = '#0a1b2e', DEEP = '#07121f', CYAN = '#2b93b6', LIGHT = '#9fd0e0', WHITE = '#ffffff';  // palette brand condivisa con il format News
 const FONT = 'Montserrat, Arial, sans-serif';
-const QA = { x: 158, y: 977, w: 790, h: 318 };   // area della citazione
-const MAXSIZE = 61, MINSIZE = 30;
+const MX = 67, FOOT_Y = 1292;                    // margini e linea del footer (come nel format News)
+const QA = { x: MX, y: 946, w: W - MX * 2, h: 296 };   // area della citazione
+const MAXSIZE = 62, MINSIZE = 30;
 
 const newSlide = (o = {}) => ({ type: 'quote', photo: '', zoom: 100, posX: 50, posY: 50, quote: '', fontmode: 'auto', ...o });
 let state = {
-  person: 'Giada Fang', upper: true,
+  person: 'Giada Fang', upper: true, align: 'center', logo: '',
   slides: [
     newSlide({ quote: 'È VERO CHE IL POKER MODERNO È FONDATO SULLA GTO, PERÒ IN ITALIA *IL FIELD NON È SICURAMENTE GTO*' }),
     newSlide(), newSlide(), newSlide(),
@@ -203,14 +208,15 @@ function serialize(tokens) {
 }
 
 /* ---------- Impaginazione ---------- */
+const tw = t => ctx.measureText(t.pre || '').width + ctx.measureText(t.w).width + ctx.measureText(t.post || '').width;
 function lineWidth(line) {
   const sp = ctx.measureText(' ').width;
-  return line.reduce((a, t, i) => a + ctx.measureText(t.w).width + (i ? sp : 0), 0);
+  return line.reduce((a, t, i) => a + tw(t) + (i ? sp : 0), 0);
 }
 function balancedWrap(tokens, size, maxW) {
   setFont(size, 800);
   const n = tokens.length; if (!n) return [];
-  const widths = tokens.map(t => ctx.measureText(t.w).width), sp = ctx.measureText(' ').width;
+  const widths = tokens.map(tw), sp = ctx.measureText(' ').width;
   const dp = Array(n + 1).fill(Infinity), nxt = Array(n).fill(n); dp[n] = 0;
   for (let i = n - 1; i >= 0; i--) {
     let w = 0;
@@ -231,6 +237,12 @@ function balancedWrap(tokens, size, maxW) {
 }
 function quoteLayout(s) {
   const tokens = parseMarkup(s.quote).map(t => ({ ...t, w: state.upper ? t.w.toLocaleUpperCase('it') : t.w }));
+  // Virgolette automatiche, attaccate alla prima e all'ultima parola (quelle eventualmente scritte a mano vengono tolte).
+  if (tokens.length) {
+    tokens[0].w = tokens[0].w.replace(/^["“”«»„]+/, ''); tokens[tokens.length - 1].w = tokens[tokens.length - 1].w.replace(/["“”«»„]+$/, '');
+  }
+  const clean = tokens.filter(t => t.w); tokens.length = 0; tokens.push(...clean);
+  if (tokens.length) { tokens[0].pre = '“'; tokens[tokens.length - 1].post = '”'; }
   const manual = s.fontmode !== 'auto';
   let size = manual ? Number(s.fontmode) : MAXSIZE, lines, lead;
   for (;;) {
@@ -259,17 +271,18 @@ function photoFill(im, s, h) {
   }
   ctx.restore();
 }
-// Marchio discreto nell'angolo: solo fumetto.
-function heading() {
+// Icona identificativa del format Interviste (microfono): cerchio uguale a quello degli altri format.
+function badge() {
   ctx.save(); ctx.translate(82, 91);
-  ctx.fillStyle = 'rgba(8,43,75,.93)'; ctx.beginPath(); ctx.arc(0, 0, 57, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = 'rgba(7,18,31,.93)'; ctx.beginPath(); ctx.arc(0, 0, 57, 0, Math.PI * 2); ctx.fill();
   ctx.strokeStyle = CYAN; ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(0, 0, 57, 0, Math.PI * 2); ctx.stroke();
-  ctx.strokeStyle = WHITE; ctx.lineWidth = 8; ctx.lineJoin = 'round'; ctx.beginPath();
-  ctx.moveTo(-18, -25); ctx.bezierCurveTo(-39, -25, -39, -7, -35, 8); ctx.bezierCurveTo(-32, 22, -20, 25, -15, 25);
-  ctx.lineTo(-22, 40); ctx.lineTo(4, 24); ctx.bezierCurveTo(27, 24, 36, 10, 34, -8); ctx.bezierCurveTo(32, -22, 18, -25, 4, -25); ctx.closePath(); ctx.stroke();
-  ctx.fillStyle = WHITE; ctx.beginPath(); ctx.arc(-10, 0, 4, 0, Math.PI * 2); ctx.arc(10, 0, 4, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+  ctx.strokeStyle = WHITE; ctx.lineWidth = 7; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.roundRect(-12, -36, 24, 40, 12); ctx.stroke();
+  ctx.beginPath(); ctx.arc(0, -4, 23, 0, Math.PI); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0, 19); ctx.lineTo(0, 32); ctx.moveTo(-13, 32); ctx.lineTo(13, 32); ctx.stroke();
+  ctx.restore();
 }
-// Nuovo divisorio: taglio diagonale netto con due fasce, che riprende la diagonale dell'angolo in basso.
+// Divisorio: taglio diagonale netto con due fasce (azzurra + blu notte).
 // (y0 = quota del bordo a sinistra, y1 = a destra; sotto il bordo si riempie con "below").
 function divider(y0, y1, below, outer) {
   const band = (d1, d2, c) => polygon([[0, y0 - d2], [W, y1 - d2], [W, y1 - d1], [0, y0 - d1]], c);
@@ -277,56 +290,72 @@ function divider(y0, y1, below, outer) {
   band(12, 21, outer);
   polygon([[0, y0], [W, y1], [W, H], [0, H]], below);
 }
-function corner(x0 = 850, y0 = 1140) {
-  polygon([[x0, 1350], [1080, y0], [1080, 1350]], LIGHT);
-  polygon([[x0 + 35, 1350], [1080, y0 + 33], [1080, 1350]], CYAN);
-  polygon([[x0 + 96, 1350], [1080, y0 + 87], [1080, 1350]], DEEP);
+// Footer come nel format News: linea a sinistra e logo ASSOPOKER a destra.
+function drawLogo(im, fg, bg) {
+  const right = W - MX, cy = FOOT_Y;
+  if (im) {   // logo caricato: viene colorato in automatico per restare leggibile sullo sfondo
+    const h = 46, w = im.width / im.height * h, c = document.createElement('canvas'); c.width = Math.round(w); c.height = h;
+    const x = c.getContext('2d'); x.drawImage(im, 0, 0, c.width, c.height); x.globalCompositeOperation = 'source-in'; x.fillStyle = fg; x.fillRect(0, 0, c.width, c.height);
+    ctx.drawImage(c, right - w, cy - h / 2); return right - w;
+  }
+  ctx.save(); setFont(31, 800); ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+  const tw2 = ctx.measureText('ASSOPOKER').width, x0 = right - tw2 - 58, cx = x0 + 24;
+  ctx.fillStyle = fg; ctx.beginPath(); ctx.ellipse(cx, cy, 24, 18, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = bg;
+  for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4; ctx.beginPath(); ctx.ellipse(cx + Math.cos(a) * 20, cy + Math.sin(a) * 15, 4.2, 3.2, a, 0, Math.PI * 2); ctx.fill(); }
+  ctx.beginPath(); ctx.ellipse(cx, cy, 13, 9.5, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = fg; ctx.beginPath(); ctx.ellipse(cx, cy, 9, 6.2, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillText('ASSOPOKER', x0 + 58, cy + 11);
+  ctx.restore(); return x0;
+}
+function footer(lg, fg, bg) {
+  const x = drawLogo(lg, fg, bg);
+  ctx.fillStyle = fg; ctx.fillRect(MX, FOOT_Y - 1, Math.max(40, x - 34 - MX), 2);
 }
 function drawName() {
   const name = state.person || 'Nome intervistato';
-  ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic'; ctx.fillStyle = DEEP;
+  ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic'; ctx.fillStyle = NAVY;
   let size = 41; setFont(size); while (ctx.measureText(name).width > 600 && size > 26) { size--; setFont(size); }
-  ctx.fillText(name, 540, 940);
+  ctx.fillText(name, 540, 906);
   const nw = ctx.measureText(name).width;
   ctx.fillStyle = CYAN;
-  const lineEnd = Math.max(230, 540 - nw / 2 - 42); ctx.fillRect(184, 924, Math.max(35, lineEnd - 184), 5);
-  const rs = Math.min(850, 540 + nw / 2 + 42); ctx.fillRect(rs, 924, Math.max(35, 896 - rs), 5);
+  const lineEnd = Math.max(230, 540 - nw / 2 - 42); ctx.fillRect(MX + 40, 890, Math.max(35, lineEnd - (MX + 40)), 5);
+  const rs = Math.min(850, 540 + nw / 2 + 42); ctx.fillRect(rs, 890, Math.max(35, (W - MX - 40) - rs), 5);
 }
 function drawQuote(L) {
   const { lines, size, lead } = L;
-  ctx.textBaseline = 'top'; ctx.textAlign = 'left';
-  const top = QA.y + (QA.h - lines.length * lead) / 2;
-  ctx.fillStyle = CYAN; ctx.font = '900 112px Georgia, serif'; ctx.fillText('“', 49, top - 26);
-  setFont(size, 800); const sp = ctx.measureText(' ').width;
+  ctx.textBaseline = 'top'; ctx.textAlign = 'left'; setFont(size, 800);
+  const sp = ctx.measureText(' ').width, top = QA.y + (QA.h - lines.length * lead) / 2;
   lines.forEach((line, i) => {
-    let x = QA.x; const y = top + i * lead;
-    for (const t of line) { ctx.fillStyle = t.hl ? CYAN : NAVY; ctx.fillText(t.w, x, y); x += ctx.measureText(t.w).width + sp; }
+    const lw = lineWidth(line), y = top + i * lead;
+    let x = state.align === 'left' ? QA.x : QA.x + (QA.w - lw) / 2;
+    for (const t of line) {
+      if (t.pre) { ctx.fillStyle = CYAN; ctx.fillText(t.pre, x, y); x += ctx.measureText(t.pre).width; }
+      ctx.fillStyle = t.hl ? CYAN : NAVY; ctx.fillText(t.w, x, y); x += ctx.measureText(t.w).width;
+      if (t.post) { ctx.fillStyle = CYAN; ctx.fillText(t.post, x, y); x += ctx.measureText(t.post).width; }
+      x += sp;
+    }
   });
-  const endX = QA.x + (lines.length ? lineWidth(lines[lines.length - 1]) : 0);
-  ctx.font = '900 86px Georgia, serif'; ctx.fillStyle = CYAN;
-  const cw = ctx.measureText('”').width, cx = Math.min(W - cw - 36, Math.max(QA.x + 20, endX + 12));
-  ctx.fillText('”', cx, top + (lines.length - 1) * lead - 12);
 }
 function drawCTA() {
   divider(715, 655, DEEP, LIGHT);
   ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic'; ctx.fillStyle = WHITE; setFont(70);
-  ctx.fillText('LEGGI L’INTERVISTA', 78, 826); ctx.fillText('COMPLETA SU', 78, 919);
-  const bx = 78, by = 971, bw = 924, bh = 136;
+  ctx.fillText('LEGGI L’INTERVISTA', 78, 818); ctx.fillText('COMPLETA SU', 78, 911);
+  const bx = 78, by = 960, bw = 924, bh = 136;
   polygon([[bx + 20, by], [bx + bw, by], [bx + bw - 20, by + bh], [bx, by + bh]], CYAN);
   setFont(69); ctx.fillStyle = WHITE; ctx.textAlign = 'center'; ctx.fillText('ASSOPOKER.COM', bx + bw / 2, by + 91); ctx.textAlign = 'left';
-  corner(835, 1145);
 }
 async function paint(i, guard) {
-  const s = state.slides[i], im = await imageOf(s.photo);
+  const s = state.slides[i], [im, lg] = await Promise.all([imageOf(s.photo), imageOf(state.logo)]);
   if (guard !== undefined && guard !== rid) return null;
   ctx.clearRect(0, 0, W, H); ctx.fillStyle = WHITE; ctx.fillRect(0, 0, W, H);
   if (s.type === 'cta') {
     ctx.fillStyle = DEEP; ctx.fillRect(0, 0, W, H);
-    photoFill(im, s, 740); drawCTA(); return { cta: true };
+    photoFill(im, s, 740); drawCTA(); footer(lg, WHITE, DEEP); return { cta: true };
   }
-  photoFill(im, s, 880); divider(858, 796, WHITE, DEEP); heading(); drawName();
+  photoFill(im, s, 850); divider(830, 768, WHITE, NAVY); badge(); drawName();
   const L = quoteLayout(s); if (L.tokens.length) drawQuote(L);
-  corner(); return { L };
+  footer(lg, NAVY, WHITE); return { L };
 }
 function draw() {
   if (exporting) return;
@@ -363,7 +392,7 @@ function buildChips() {
 function refresh() {
   const s = cur(), isCta = s.type === 'cta';
   buildTabs();
-  $('person').value = state.person; $('upper').checked = state.upper;
+  $('person').value = state.person; $('upper').checked = state.upper; $('align').value = state.align;
   $('quoteControls').classList.toggle('hidden', isCta); $('ctaControls').classList.toggle('hidden', !isCta);
   $('zoom').value = s.zoom; $('posX').value = s.posX; $('posY').value = s.posY; $('photo').value = '';
   $('quote').value = s.quote; $('fontmode').value = s.fontmode;
@@ -372,6 +401,9 @@ function refresh() {
   buildChips(); draw();
 }
 $('person').oninput = e => { state.person = e.target.value; draw(); };
+$('align').onchange = e => { state.align = e.target.value; draw(); };
+$('logo').onchange = async e => { const f = e.target.files && e.target.files[0]; if (!f) return; try { state.logo = await loadFile(f, 600, 'image/png'); } catch (err) { alert(err.message); } e.target.value = ''; draw(); };
+$('logoReset').onclick = () => { state.logo = ''; draw(); };
 $('upper').onchange = e => { state.upper = e.target.checked; draw(); };
 const bindSlide = (id, key, fn = v => v, ev = 'input') => $(id)[ev === 'change' ? 'onchange' : 'oninput'] = e => { cur()[key] = fn(e.target.value); draw(); };
 ['zoom', 'posX', 'posY'].forEach(k => bindSlide(k, k, Number)); bindSlide('fontmode', 'fontmode', v => v, 'change');
@@ -442,7 +474,7 @@ $('load').onchange = async e => {
       slides = d.slides.slice(0, d.count).map(s => newSlide({ photo: s.photo || '', zoom: s.zoom || 100, posY: s.pos ?? 50, fontmode: s.fontmode || 'auto', quote: markPhrases(s.quote || '', [s.highlight, s.highlight2]) }));
       slides.push(newSlide({ type: 'cta', photo: d.cta.photo || '', zoom: d.cta.zoom || 100, posY: d.cta.pos ?? 50 }));
     } else throw Error('formato non valido');
-    state = { person: String(d.person || ''), upper: d.upper !== false, slides };
+    state = { person: String(d.person || ''), upper: d.upper !== false, align: d.align === 'left' ? 'left' : 'center', logo: d.logo || '', slides };
     cache.clear(); active = 0; refresh();
   } catch (err) { alert('Impossibile aprire il progetto: ' + err.message); }
   e.target.value = '';
