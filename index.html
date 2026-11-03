@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Assopoker · Gallery News</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0a1b2e;--deep:#07121f;--teal:#2b93b6;--bg:#eef3f6;--border:#d7e3e9}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#15334a;font-family:Montserrat,Arial,sans-serif}
+header{background:linear-gradient(110deg,#07121f,#0d3350);color:#fff;padding:23px 30px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+header h1{font-size:19px;margin:0;font-weight:800;letter-spacing:.02em}
+header p{font-size:12px;opacity:.8;margin:5px 0 0}
+.tag{font-size:11px;border:1px solid #5fb3cf;padding:7px 11px;border-radius:30px;white-space:nowrap}
+.layout{max-width:1470px;margin:auto;display:grid;grid-template-columns:minmax(370px,1fr) minmax(420px,1.06fr);gap:24px;padding:24px}
+.panel{background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:0 8px 24px #13364b0c;padding:23px;margin-bottom:18px}
+h2{font-size:15px;margin:0 0 17px;font-weight:800}
+label{font-size:12px;font-weight:700;display:block;margin-bottom:7px}
+.field{margin-bottom:15px}
+input[type=text],textarea,select{width:100%;border:1px solid #cbdbe3;border-radius:9px;padding:12px;font:500 13px Montserrat,Arial,sans-serif;background:#fff;color:#12344a}
+textarea{resize:vertical;min-height:90px;line-height:1.55}
+input[type=file]{font-size:12px;max-width:100%}
+input[type=range]{width:100%;accent-color:var(--teal)}
+.row{display:flex;gap:13px}.row>*{flex:1;min-width:0}
+.hint{font-size:11px;color:#647f90;line-height:1.6;margin:5px 0}
+.btn{border:0;border-radius:10px;background:var(--navy);color:#fff;font:700 12px Montserrat,Arial,sans-serif;padding:11px 14px;cursor:pointer}
+.btn:hover{filter:brightness(1.15)}
+.btn.alt{background:#e5f1f5;color:#0c4c66}
+.btn.teal{background:var(--teal)}
+.btn.danger{background:#fbeaea;color:#a02a2a}
+.btn:disabled{opacity:.55;cursor:wait}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.slide-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
+.tab{border:1px solid #c6dbe3;border-radius:9px;background:#f4f9fb;color:#1e5268;padding:10px 12px;font:700 12px Montserrat,Arial;cursor:pointer}
+.tab small{display:block;font-weight:500;font-size:10px;opacity:.75;margin-top:2px}
+.tab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.slide-actions{margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--border)}
+.preview-panel{position:sticky;top:15px;align-self:start}
+.canvas-wrap{max-width:540px;margin:auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 8px 28px #173a4d25}
+canvas{display:block;width:100%;height:auto;aspect-ratio:4/5}
+.preview-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:16px;gap:10px}
+.status{font-size:12px;color:#5b7482}.status.warn{color:#b14e19;font-weight:700}
+.notice{background:#edf8fb;border-left:3px solid var(--teal);padding:12px;font-size:11px;line-height:1.7;border-radius:4px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 2px}
+.chip{border:1px solid #c6dbe3;background:#f4f9fb;color:#1e4f66;border-radius:7px;padding:6px 9px;font:700 11px Montserrat,Arial;cursor:pointer}
+.chip.on{background:var(--teal);border-color:var(--teal);color:#fff}
+details{border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:15px}
+summary{font-size:12px;font-weight:800;cursor:pointer}
+details[open] summary{margin-bottom:14px}
+.check{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;margin-top:30px}
+.hidden{display:none!important}
+footer{font-size:11px;color:#648094;padding:0 24px 25px;max-width:1470px;margin:auto}
+@media(max-width:950px){.layout{grid-template-columns:1fr}.preview-panel{position:static;order:-1}.canvas-wrap{max-width:430px}}
+@media(max-width:520px){.layout{padding:12px;gap:12px}.panel{padding:16px}header{padding:18px}header h1{font-size:15px}.tag{display:none}.row{flex-direction:column;gap:0}.check{margin-top:0;margin-bottom:15px}}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>ASSOPOKER <span style="color:#5fd0ea">/</span> GALLERY NEWS</h1><p>Generatore editoriale · 4:5 · 1080 × 1350 px</p></div>
+  <span class="tag">VERSIONE 1.0 · LOCALE</span>
+</header>
+
+<main class="layout">
+<section>
+
+  <div class="panel">
+    <h2>01 / Impostazioni gallery</h2>
+    <div class="row">
+      <div class="field"><label for="name">Nome file export</label><input id="name" type="text" placeholder="es. camosci_fisco_malta"></div>
+      <div class="field"><label for="label">Etichetta (fonte)</label><input id="label" type="text" placeholder="NEWS ANSA"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label for="fade">Intensità sfumatura scura</label><input id="fade" type="range" min="50" max="100" value="92"></div>
+      <label class="check"><input type="checkbox" id="upper" checked> Titoli in MAIUSCOLO</label>
+    </div>
+    <div class="field"><label>Logo in basso a destra (opzionale)</label>
+      <input type="file" id="logo" accept="image/*"> <button class="btn alt" id="logoReset" style="padding:7px 10px;margin-left:6px">Usa quello standard</button>
+      <p class="hint">Se non carichi nulla viene usato un logo ASSOPOKER vettoriale. Meglio un PNG bianco con sfondo trasparente.</p></div>
+    <div class="notice">Il testo si ridimensiona da solo in base alla lunghezza e cresce verso l'alto, ancorato al fondo: non devi più sistemare nulla a mano. Per evidenziare in azzurro, clicca sulle parole sotto al titolo.</div>
+  </div>
+
+  <div class="panel">
+    <h2>02 / Slide</h2>
+    <div class="slide-tabs" id="tabs"></div>
+    <div class="actions slide-actions">
+      <button class="btn alt" id="addSlide">+ Aggiungi</button>
+      <button class="btn alt" id="dupSlide">Duplica</button>
+      <button class="btn alt" id="moveL">◀ Sposta</button>
+      <button class="btn alt" id="moveR">Sposta ▶</button>
+      <button class="btn danger" id="delSlide">Elimina</button>
+    </div>
+
+    <div class="row">
+      <div class="field"><label for="layout">Tipo di slide</label>
+        <select id="layout"><option value="cover">Copertina · solo titolo</option><option value="text">Approfondimento · titolo + testo</option></select></div>
+      <div class="field"><label for="fontmode">Dimensione testo</label>
+        <select id="fontmode"><option value="auto">Automatica (consigliata)</option><option value="1">Massima</option><option value="0.88">Grande</option><option value="0.76">Media</option><option value="0.64">Piccola</option><option value="0.52">Minima</option></select></div>
+    </div>
+
+    <div class="field"><label>Fotografia</label><input type="file" id="photo" accept="image/*"></div>
+    <div class="row">
+      <div class="field"><label>Zoom</label><input type="range" id="zoom" min="100" max="250" value="100"></div>
+      <div class="field"><label>Posizione orizzontale</label><input type="range" id="posX" min="0" max="100" value="50"></div>
+      <div class="field"><label>Posizione verticale</label><input type="range" id="posY" min="0" max="100" value="50"></div>
+    </div>
+
+    <div class="field"><label>Etichetta di questa slide (vuoto = usa quella generale)</label><input type="text" id="slabel" placeholder="Lascia vuoto per usare l'etichetta generale"></div>
+
+    <div class="field"><label>Titolo</label>
+      <textarea id="title" placeholder="Scrivi qui il titolo…"></textarea>
+      <div class="chips" id="chips"></div>
+      <p class="hint">Clicca sulle parole per evidenziarle in azzurro (oppure scrivile tra asterischi: *così*). <span id="charcount"></span></p>
+    </div>
+
+    <div class="field" id="bodyField"><label>Testo di approfondimento</label>
+      <textarea id="body" style="min-height:130px" placeholder="Scrivi qui il testo. Un invio = nuovo paragrafo."></textarea></div>
+
+    <details>
+      <summary>Elemento sovrapposto (es. carte, sticker PNG)</summary>
+      <div class="field"><label>Immagine PNG (meglio con sfondo trasparente)</label><input type="file" id="sticker" accept="image/*"> <button class="btn alt" id="stickerDel" style="padding:7px 10px;margin-left:6px">Rimuovi</button></div>
+      <div class="row">
+        <div class="field"><label>Dimensione</label><input type="range" id="stScale" min="5" max="90" value="30"></div>
+        <div class="field"><label>Rotazione</label><input type="range" id="stRot" min="-60" max="60" value="-8"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>Posizione X</label><input type="range" id="stX" min="0" max="100" value="30"></div>
+        <div class="field"><label>Posizione Y</label><input type="range" id="stY" min="0" max="100" value="15"></div>
+      </div>
+    </details>
+  </div>
+
+  <div class="panel">
+    <h2>03 / Esporta e conserva</h2>
+    <div class="actions">
+      <button class="btn teal" id="exportAll">Esporta gallery ZIP</button>
+      <button class="btn" id="exportOne">Scarica JPG attuale</button>
+      <button class="btn alt" id="save">Salva progetto</button>
+      <button class="btn alt" id="loadBtn">Apri progetto</button>
+      <input type="file" id="load" accept="application/json,.json" class="hidden">
+    </div>
+    <p class="hint">Il progetto JSON conserva foto, testi e impostazioni, così puoi riaprirlo in seguito. L'esportazione ZIP produce JPG numerati nell'ordine della gallery.</p>
+  </div>
+</section>
+
+<aside class="panel preview-panel">
+  <h2>Anteprima · <span id="previewLabel">Slide 1</span></h2>
+  <div class="canvas-wrap"><canvas id="canvas" width="1080" height="1350"></canvas></div>
+  <div class="preview-bottom">
+    <span id="status" class="status">Pronta per l'esportazione</span>
+    <div class="actions"><button class="btn alt" id="prev">←</button><button class="btn alt" id="next">→</button></div>
+  </div>
+  <p class="hint">L'anteprima mostra il JPG finale. Nessuna foto viene inviata a server. Per Montserrat apri il file con connessione Internet oppure installa il font sul computer.</p>
+</aside>
+</main>
+<footer>Assopoker · Template editoriale interno. Verificare sempre titolo, fonte e inquadratura prima della pubblicazione.</footer>
+
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const W = 1080, H = 1350;
+const canvas = $('canvas'), ctx = canvas.getContext('2d');
+const C = { deep: '#07121f', navy: '#0a1b2e', teal: '#2b93b6', white: '#ffffff' };
+const FONT = 'Montserrat, Arial, sans-serif';
+const MX = 67, TW = W - MX * 2;      // margini laterali e larghezza utile del testo
+const BOTTOM = 1240;                  // fondo del blocco di testo (ancoraggio)
+const FOOT_Y = 1292;                  // linea del footer e centro del logo
+const LABEL_H = 94;                   // altezza del blocco etichetta + linea
+
+const newSlide = (o = {}) => ({
+  layout: 'cover', photo: '', zoom: 100, posX: 50, posY: 50,
+  label: '', title: '', body: '', fontmode: 'auto',
+  sticker: '', stScale: 30, stX: 30, stY: 15, stRot: -8, ...o
+});
+
+let state = {
+  name: 'news', label: 'NEWS ANSA', fade: 92, upper: true, logo: '',
+  slides: [
+    newSlide({ title: '*NUOVI GUAI* COL *FISCO* PER *ENRICO CAMOSCI:* CONTESTATA DALLA GDF LA SUA *RESIDENZA* A *MALTA*' }),
+    newSlide({ layout: 'text', title: 'IL *CONTESTO* DELLA VICENDA', body: 'Inserisci qui il testo di approfondimento.\nIl carattere si adatta automaticamente alla lunghezza: se scrivi di più il testo si rimpicciolisce, se scrivi meno si ingrandisce.' })
+  ]
+};
+let active = 0, exporting = false, rid = 0;
+const cache = new Map();
+const cur = () => state.slides[active];
+
+/* ---------- Utilità ---------- */
+function setStatus(t, warn = false) { $('status').textContent = t; $('status').className = 'status' + (warn ? ' warn' : ''); }
+function setFont(size, weight = 800) { ctx.font = `${weight} ${size}px ${FONT}`; }
+function imageOf(src) {
+  if (!src) return Promise.resolve(null);
+  if (!cache.has(src)) cache.set(src, new Promise(r => { const im = new Image(); im.onload = () => r(im); im.onerror = () => r(null); im.src = src; }));
+  return cache.get(src);
+}
+// Carica un file e lo ridimensiona (alleggerisce progetto e memoria).
+function loadFile(file, max, mime, q) {
+  return new Promise((res, rej) => {
+    const fr = new FileReader();
+    fr.onerror = () => rej(Error('Lettura del file non riuscita'));
+    fr.onload = () => {
+      const im = new Image();
+      im.onerror = () => rej(Error('Immagine non leggibile'));
+      im.onload = () => {
+        const k = Math.min(1, max / Math.max(im.width, im.height));
+        const c = document.createElement('canvas'); c.width = Math.round(im.width * k); c.height = Math.round(im.height * k);
+        const x = c.getContext('2d'); if (mime === 'image/jpeg') { x.fillStyle = '#000'; x.fillRect(0, 0, c.width, c.height); }
+        x.drawImage(im, 0, 0, c.width, c.height); res(c.toDataURL(mime, q));
+      };
+      im.src = fr.result;
+    };
+    fr.readAsDataURL(file);
+  });
+}
+
+/* ---------- Markup titolo: *parole evidenziate* ---------- */
+function parseMarkup(str) {
+  const tokens = []; let hl = false, cur = '', curHl = false;
+  const push = () => { if (cur) { tokens.push({ w: cur, hl: curHl }); cur = ''; } };
+  for (const ch of str) {
+    if (ch === '*') { hl = !hl; continue; }
+    if (/\s/.test(ch)) { push(); continue; }
+    if (!cur) curHl = hl;
+    cur += ch;
+  }
+  push(); return tokens;
+}
+function serialize(tokens) {
+  const out = []; let run = [];
+  const flush = () => { if (run.length) { out.push('*' + run.join(' ') + '*'); run = []; } };
+  for (const t of tokens) { if (t.hl) run.push(t.w); else { flush(); out.push(t.w); } }
+  flush(); return out.join(' ');
+}
+
+/* ---------- Impaginazione testo ---------- */
+function lineWidth(line) {
+  const sp = ctx.measureText(' ').width;
+  return line.reduce((a, t, i) => a + ctx.measureText(t.w).width + (i ? sp : 0), 0);
+}
+// Spezzatura bilanciata: righe di lunghezza simile, senza lasciare preposizioni corte a fine riga.
+function balancedWrap(tokens, size, maxW) {
+  setFont(size, 800);
+  const n = tokens.length; if (!n) return [];
+  const widths = tokens.map(t => ctx.measureText(t.w).width), sp = ctx.measureText(' ').width;
+  const dp = Array(n + 1).fill(Infinity), nxt = Array(n).fill(n); dp[n] = 0;
+  for (let i = n - 1; i >= 0; i--) {
+    let w = 0;
+    for (let j = i; j < n; j++) {
+      w += widths[j] + (j > i ? sp : 0);
+      if (w > maxW && j > i) break;
+      const last = j === n - 1, full = Math.min(w / maxW, 1);
+      let pen = Math.pow(1 - full, 2) * (last ? .2 : 1.3);
+      if (last && full < .3) pen += .4;
+      if (!last && tokens[j].w.replace(/[^\p{L}\p{N}]/gu, '').length <= 2) pen += .45;
+      if (w > maxW) pen += 5;
+      const sc = pen + dp[j + 1] + .13;
+      if (sc < dp[i]) { dp[i] = sc; nxt[i] = j + 1; }
+    }
+  }
+  const lines = []; for (let i = 0; i < n;) { const j = nxt[i]; lines.push(tokens.slice(i, j)); i = j; }
+  return lines;
+}
+// Testo corrente: righe a capo greedy, paragrafi separati da invio (null = spazio tra paragrafi).
+function wrapBody(text, size, maxW) {
+  setFont(size, 500);
+  const sp = ctx.measureText(' ').width, out = [];
+  for (const para of text.split(/\n/)) {
+    const words = para.trim().split(/\s+/).filter(Boolean);
+    if (!words.length) { if (out.length && out[out.length - 1] !== null) out.push(null); continue; }
+    let line = '', w = 0;
+    for (const word of words) {
+      const ww = ctx.measureText(word).width;
+      if (line && w + sp + ww > maxW) { out.push(line); line = word; w = ww; } else { w += (line ? sp : 0) + ww; line = line ? line + ' ' + word : word; }
+    }
+    if (line) out.push(line);
+    out.push(null);
+  }
+  while (out.length && out[out.length - 1] === null) out.pop();
+  return out;
+}
+function measure(tokens, s, cfg, k) {
+  const text = s.layout === 'text';
+  const tSize = cfg.tMax * k, tLead = tSize * 1.12;
+  const lines = balancedWrap(tokens, tSize, TW);
+  setFont(tSize, 800);
+  const wide = lines.some(l => lineWidth(l) > TW + 1);
+  let bSize = 0, bLead = 0, bodyLines = [], bH = 0, gap = 0;
+  if (text && s.body.trim()) {
+    bSize = Math.max(22, cfg.bMax * k); bLead = bSize * 1.45;
+    bodyLines = wrapBody(s.body, bSize, TW);
+    bH = bodyLines.reduce((a, l) => a + (l === null ? bLead * .5 : bLead), 0); gap = 44;
+  }
+  return { lines, tSize, tLead, bodyLines, bSize, bLead, wide, gap, total: lines.length * tLead + gap + bH };
+}
+function layoutFor(s) {
+  const tokens = parseMarkup(s.title).map(t => ({ ...t, w: state.upper ? t.w.toLocaleUpperCase('it') : t.w }));
+  const cfg = s.layout === 'text'
+    ? { tMax: 62, tMin: 32, bMax: 34, avail: 700 }
+    : { tMax: 78, tMin: 40, bMax: 0, avail: 540 };
+  const manual = s.fontmode !== 'auto', minK = cfg.tMin / cfg.tMax;
+  let k = manual ? Number(s.fontmode) : 1, r;
+  for (;;) {
+    r = measure(tokens, s, cfg, k);
+    if (manual || (r.total <= cfg.avail && !r.wide) || k <= minK + 1e-6) break;
+    k = Math.max(minK, k - .02);
+  }
+  r.overflow = r.total > cfg.avail || r.wide; r.empty = !tokens.length;
+  return r;
+}
+
+/* ---------- Disegno ---------- */
+function photoFill(im, s) {
+  ctx.save();
+  if (im) {
+    const sc = Math.max(W / im.width, H / im.height) * (s.zoom / 100), sw = im.width * sc, sh = im.height * sc;
+    ctx.drawImage(im, (W - sw) * s.posX / 100, (H - sh) * s.posY / 100, sw, sh);
+  } else {
+    const g = ctx.createLinearGradient(0, 0, W, H);
+    g.addColorStop(0, '#16415f'); g.addColorStop(.55, '#2b7f9c'); g.addColorStop(1, '#a9d3df');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = '#ffffffb0'; ctx.textAlign = 'center'; setFont(30, 600);
+    ctx.fillText('CARICA UNA FOTOGRAFIA', W / 2, 330);
+  }
+  ctx.restore();
+}
+function fade(top) {
+  const a = state.fade / 100, y0 = Math.max(0, top - 330);
+  const g = ctx.createLinearGradient(0, y0, 0, top + 60);
+  g.addColorStop(0, 'rgba(7,18,31,0)'); g.addColorStop(.4, `rgba(7,18,31,${a * .38})`);
+  g.addColorStop(.75, `rgba(7,18,31,${a * .8})`); g.addColorStop(1, `rgba(7,18,31,${a})`);
+  ctx.fillStyle = g; ctx.fillRect(0, y0, W, top + 60 - y0);
+  ctx.fillStyle = `rgba(7,18,31,${a})`; ctx.fillRect(0, top + 60, W, H - top - 60);
+}
+function sticker(im, s) {
+  if (!im) return;
+  const w = W * s.stScale / 100, h = w * im.height / im.width;
+  ctx.save(); ctx.translate(W * s.stX / 100, H * s.stY / 100); ctx.rotate(s.stRot * Math.PI / 180);
+  ctx.shadowColor = 'rgba(0,0,0,.35)'; ctx.shadowBlur = 24; ctx.shadowOffsetY = 8;
+  ctx.drawImage(im, -w / 2, -h / 2, w, h); ctx.restore();
+}
+function drawLogo(im) {
+  const right = W - MX, cy = FOOT_Y;
+  if (im) { const h = 46, w = im.width / im.height * h; ctx.drawImage(im, right - w, cy - h / 2, w, h); return right - w; }
+  ctx.save(); setFont(31, 800); ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+  const tw = ctx.measureText('ASSOPOKER').width, x0 = right - tw - 58;
+  // fiche stilizzata
+  const cx = x0 + 24;
+  ctx.fillStyle = C.white; ctx.beginPath(); ctx.ellipse(cx, cy, 24, 18, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = C.deep;
+  for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4; ctx.beginPath(); ctx.ellipse(cx + Math.cos(a) * 20, cy + Math.sin(a) * 15, 4.2, 3.2, a, 0, Math.PI * 2); ctx.fill(); }
+  ctx.beginPath(); ctx.ellipse(cx, cy, 13, 9.5, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = C.white; ctx.beginPath(); ctx.ellipse(cx, cy, 9, 6.2, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillText('ASSOPOKER', x0 + 58, cy + 11);
+  ctx.restore(); return x0;
+}
+async function paint(i, guard) {
+  const s = state.slides[i];
+  const [im, st, lg] = await Promise.all([imageOf(s.photo), imageOf(s.sticker), imageOf(state.logo)]);
+  if (guard !== undefined && guard !== rid) return null;
+  ctx.clearRect(0, 0, W, H); ctx.fillStyle = C.deep; ctx.fillRect(0, 0, W, H);
+  const L = layoutFor(s), label = (s.label.trim() || state.label.trim()), lh = label ? LABEL_H : 0;
+  const top = BOTTOM - L.total, blockTop = top - lh;
+
+  photoFill(im, s); fade(blockTop); sticker(st, s);
+
+  ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
+  if (label) {
+    ctx.fillStyle = C.white; setFont(37, 400);
+    if ('letterSpacing' in ctx) ctx.letterSpacing = '1px';
+    ctx.fillText(label.toLocaleUpperCase('it'), MX, blockTop + 34);
+    if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
+    ctx.fillRect(MX, blockTop + 60, W - MX * 2, 2);
+  }
+  // titolo
+  setFont(L.tSize, 800);
+  const sp = ctx.measureText(' ').width; let y = top;
+  for (const line of L.lines) {
+    let x = MX; const base = y + (L.tLead + L.tSize * .7) / 2;
+    for (const t of line) { ctx.fillStyle = t.hl ? C.teal : C.white; ctx.fillText(t.w, x, base); x += ctx.measureText(t.w).width + sp; }
+    y += L.tLead;
+  }
+  // testo di approfondimento
+  if (L.bodyLines.length) {
+    ctx.fillStyle = C.teal; ctx.fillRect(MX, y + L.gap / 2 - 3, 90, 6); y += L.gap;
+    setFont(L.bSize, 500); ctx.fillStyle = 'rgba(255,255,255,.92)';
+    for (const l of L.bodyLines) { if (l === null) { y += L.bLead * .5; continue; } ctx.fillText(l, MX, y + (L.bLead + L.bSize * .7) / 2); y += L.bLead; }
+  }
+  // footer
+  const logoX = drawLogo(lg);
+  ctx.fillStyle = C.white; ctx.fillRect(MX, FOOT_Y - 1, Math.max(40, logoX - 34 - MX), 2);
+  return { L, label };
+}
+function draw() {
+  if (exporting) return;
+  const g = ++rid;
+  paint(active, g).then(r => {
+    if (!r) return; const L = r.L, s = cur();
+    if (L.empty) setStatus('Inserisci il titolo', true);
+    else if (L.overflow) setStatus('Testo troppo lungo: accorcia il titolo/testo', true);
+    else setStatus(`${L.lines.length} righe · titolo ${Math.round(L.tSize)}px` + (L.bodyLines.length ? ` · testo ${Math.round(L.bSize)}px` : '') + (s.photo ? '' : ' · manca la foto'), !s.photo);
+  });
+}
+
+/* ---------- Interfaccia ---------- */
+function buildTabs() {
+  const el = $('tabs'); el.innerHTML = '';
+  state.slides.forEach((s, i) => {
+    const b = document.createElement('button'); b.className = 'tab' + (i === active ? ' active' : '');
+    b.innerHTML = `Slide ${i + 1}<small>${s.layout === 'cover' ? 'Copertina' : 'Testo'}</small>`;
+    b.onclick = () => { active = i; refresh(); }; el.appendChild(b);
+  });
+}
+function buildChips() {
+  const el = $('chips'); el.innerHTML = '';
+  const tokens = parseMarkup(cur().title);
+  tokens.forEach((t, i) => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'chip' + (t.hl ? ' on' : ''); b.textContent = t.w;
+    b.onclick = () => { t.hl = !t.hl; cur().title = serialize(tokens); $('title').value = cur().title; buildChips(); draw(); };
+    el.appendChild(b);
+  });
+}
+function refresh() {
+  const s = cur();
+  buildTabs();
+  $('name').value = state.name; $('label').value = state.label; $('fade').value = state.fade; $('upper').checked = state.upper;
+  $('layout').value = s.layout; $('fontmode').value = s.fontmode;
+  $('zoom').value = s.zoom; $('posX').value = s.posX; $('posY').value = s.posY;
+  $('slabel').value = s.label; $('title').value = s.title; $('body').value = s.body;
+  $('bodyField').classList.toggle('hidden', s.layout !== 'text');
+  $('stScale').value = s.stScale; $('stRot').value = s.stRot; $('stX').value = s.stX; $('stY').value = s.stY;
+  $('photo').value = ''; $('sticker').value = '';
+  $('charcount').textContent = s.title.replace(/\*/g, '').length + ' caratteri';
+  $('previewLabel').textContent = 'Slide ' + (active + 1) + ' di ' + state.slides.length;
+  buildChips(); draw();
+}
+const bindState = (id, key, fn = v => v, ev = 'input') => $(id)[ev === 'change' ? 'onchange' : 'oninput'] = e => { state[key] = fn(e.target.type === 'checkbox' ? e.target.checked : e.target.value); draw(); };
+bindState('name', 'name'); bindState('label', 'label'); bindState('fade', 'fade', Number); bindState('upper', 'upper', Boolean, 'change');
+const bindSlide = (id, key, fn = v => v, ev = 'input') => $(id)[ev === 'change' ? 'onchange' : 'oninput'] = e => { cur()[key] = fn(e.target.value); draw(); };
+bindSlide('fontmode', 'fontmode', v => v, 'change'); bindSlide('slabel', 'label');
+['zoom', 'posX', 'posY', 'stScale', 'stRot', 'stX', 'stY'].forEach(k => bindSlide(k, k, Number));
+$('layout').onchange = e => { cur().layout = e.target.value; refresh(); };
+$('title').oninput = e => { cur().title = e.target.value; $('charcount').textContent = e.target.value.replace(/\*/g, '').length + ' caratteri'; buildChips(); draw(); };
+$('body').oninput = e => { cur().body = e.target.value; draw(); };
+
+async function pickImage(input, apply, max, mime, q) {
+  const f = input.files && input.files[0]; if (!f) return;
+  if (!f.type.startsWith('image/')) return alert('Seleziona un file immagine.');
+  try { apply(await loadFile(f, max, mime, q)); } catch (err) { alert(err.message); }
+  input.value = ''; draw();
+}
+$('photo').onchange = e => pickImage(e.target, d => cur().photo = d, 2000, 'image/jpeg', .92);
+$('sticker').onchange = e => pickImage(e.target, d => cur().sticker = d, 1000, 'image/png');
+$('logo').onchange = e => pickImage(e.target, d => state.logo = d, 600, 'image/png');
+$('stickerDel').onclick = () => { cur().sticker = ''; draw(); };
+$('logoReset').onclick = () => { state.logo = ''; draw(); };
+
+$('addSlide').onclick = () => { if (state.slides.length >= 10) return alert('Massimo 10 slide per gallery.'); state.slides.push(newSlide({ layout: 'text' })); active = state.slides.length - 1; refresh(); };
+$('dupSlide').onclick = () => { if (state.slides.length >= 10) return alert('Massimo 10 slide per gallery.'); state.slides.splice(active + 1, 0, JSON.parse(JSON.stringify(cur()))); active++; refresh(); };
+$('delSlide').onclick = () => { if (state.slides.length < 2) return alert('Serve almeno una slide.'); if (!confirm('Eliminare la slide ' + (active + 1) + '?')) return; state.slides.splice(active, 1); active = Math.min(active, state.slides.length - 1); refresh(); };
+const move = d => { const j = active + d; if (j < 0 || j >= state.slides.length) return; [state.slides[active], state.slides[j]] = [state.slides[j], state.slides[active]]; active = j; refresh(); };
+$('moveL').onclick = () => move(-1); $('moveR').onclick = () => move(1);
+$('prev').onclick = () => { active = (active + state.slides.length - 1) % state.slides.length; refresh(); };
+$('next').onclick = () => { active = (active + 1) % state.slides.length; refresh(); };
+
+/* ---------- Esportazione ---------- */
+function downloadBlob(blob, name) { const a = document.createElement('a'), u = URL.createObjectURL(blob); a.href = u; a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(u), 20000); }
+const jpg = () => new Promise(r => canvas.toBlob(r, 'image/jpeg', .94));
+function cleanName() { return (state.name || 'news').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/gi, '_').replace(/^_|_$/g, '').toLowerCase() || 'news'; }
+async function loadFonts() { try { await Promise.all([300, 400, 500, 800].map(w => document.fonts.load(`${w} 40px Montserrat`))); await document.fonts.ready; } catch (e) { } }
+
+$('exportOne').onclick = async () => { await loadFonts(); await paint(active); downloadBlob(await jpg(), `${cleanName()}_${String(active + 1).padStart(2, '0')}.jpg`); draw(); };
+$('exportAll').onclick = async e => {
+  const miss = []; state.slides.forEach((s, i) => { if (!s.photo) miss.push('foto slide ' + (i + 1)); if (!s.title.trim()) miss.push('titolo slide ' + (i + 1)); });
+  if (miss.length && !confirm('Mancano: ' + miss.join(', ') + '.\n\nEsportare comunque?')) return;
+  const b = e.target; b.disabled = true; b.textContent = 'Preparazione ZIP…'; exporting = true;
+  try {
+    await loadFonts(); const entries = [];
+    for (let i = 0; i < state.slides.length; i++) {
+      await paint(i); const blob = await jpg();
+      entries.push({ name: `${cleanName()}_${String(i + 1).padStart(2, '0')}.jpg`, data: new Uint8Array(await blob.arrayBuffer()) });
+    }
+    downloadBlob(zip(entries), `gallery_${cleanName()}.zip`);
+  } catch (err) { alert('Errore durante l’esportazione: ' + err.message); }
+  finally { exporting = false; b.disabled = false; b.textContent = 'Esporta gallery ZIP'; draw(); }
+};
+
+/* ---------- Salvataggio progetto ---------- */
+$('save').onclick = () => downloadBlob(new Blob([JSON.stringify({ version: 1, type: 'news', ...state }, null, 2)], { type: 'application/json' }), `progetto_news_${cleanName()}.json`);
+$('loadBtn').onclick = () => $('load').click();
+$('load').onchange = async e => {
+  const f = e.target.files && e.target.files[0]; if (!f) return;
+  try {
+    const d = JSON.parse(await f.text());
+    if (!Array.isArray(d.slides) || !d.slides.length || d.type !== 'news') throw Error('non è un progetto News valido');
+    state = { name: String(d.name || 'news'), label: String(d.label ?? 'NEWS ANSA'), fade: Number(d.fade) || 92, upper: d.upper !== false, logo: d.logo || '', slides: d.slides.slice(0, 10).map(s => newSlide(s)) };
+    cache.clear(); active = 0; refresh();
+  } catch (err) { alert('Impossibile aprire il progetto: ' + err.message); }
+  e.target.value = '';
+};
+
+/* ---------- ZIP senza librerie (STORE) ---------- */
+const crcTable = (() => { const t = []; for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+function crc32(bytes) { let c = 0xffffffff; for (const b of bytes) c = crcTable[(c ^ b) & 255] ^ (c >>> 8); return (c ^ 0xffffffff) >>> 0; }
+function zip(entries) {
+  const enc = new TextEncoder(), parts = [], central = []; let offset = 0;
+  for (const { name, data: d } of entries) {
+    const n = enc.encode(name), crc = crc32(d), local = new Uint8Array(30 + n.length), v = new DataView(local.buffer);
+    v.setUint32(0, 0x04034b50, true); v.setUint16(4, 20, true); v.setUint32(14, crc, true); v.setUint32(18, d.length, true); v.setUint32(22, d.length, true); v.setUint16(26, n.length, true); local.set(n, 30);
+    parts.push(local, d);
+    const cent = new Uint8Array(46 + n.length), cv = new DataView(cent.buffer);
+    cv.setUint32(0, 0x02014b50, true); cv.setUint16(4, 20, true); cv.setUint16(6, 20, true); cv.setUint32(16, crc, true); cv.setUint32(20, d.length, true); cv.setUint32(24, d.length, true); cv.setUint16(28, n.length, true); cv.setUint32(42, offset, true); cent.set(n, 46);
+    central.push(cent); offset += local.length + d.length;
+  }
+  const size = central.reduce((a, c) => a + c.length, 0), end = new Uint8Array(22), ev = new DataView(end.buffer);
+  ev.setUint32(0, 0x06054b50, true); ev.setUint16(8, entries.length, true); ev.setUint16(10, entries.length, true); ev.setUint32(12, size, true); ev.setUint32(16, offset, true);
+  return new Blob([...parts, ...central, end], { type: 'application/zip' });
+}
+
+loadFonts().then(refresh); refresh();
+</script>
+</body>
+</html>
