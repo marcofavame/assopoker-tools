@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Assopoker · Gallery Interviste</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0a3153;--dark:#082943;--cyan:#00a6c9;--bg:#eef4f7;--border:#d7e3e9}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#15334a;font-family:Montserrat,Arial,sans-serif}
+header{background:linear-gradient(110deg,#092d4b,#075576);color:#fff;padding:23px 30px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+header h1{font-size:19px;margin:0;font-weight:800;letter-spacing:.02em}
+header p{font-size:12px;opacity:.8;margin:5px 0 0}
+.tag{font-size:11px;border:1px solid #6bc6d8;padding:7px 11px;border-radius:30px;white-space:nowrap}
+.layout{max-width:1470px;margin:auto;display:grid;grid-template-columns:minmax(370px,1fr) minmax(420px,1.06fr);gap:24px;padding:24px}
+.panel{background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:0 8px 24px #13364b0c;padding:23px;margin-bottom:18px}
+h2{font-size:15px;margin:0 0 17px;font-weight:800}
+label{font-size:12px;font-weight:700;display:block;margin-bottom:7px}
+.field{margin-bottom:15px}
+input[type=text],textarea,select{width:100%;border:1px solid #cbdbe3;border-radius:9px;padding:12px;font:500 13px Montserrat,Arial,sans-serif;background:#fff;color:#12344a}
+textarea{resize:vertical;min-height:105px;line-height:1.55}
+input[type=file]{font-size:12px;max-width:100%}
+input[type=range]{width:100%;accent-color:var(--cyan)}
+.row{display:flex;gap:13px}.row>*{flex:1;min-width:0}
+.hint{font-size:11px;color:#647f90;line-height:1.6;margin:5px 0}
+.btn{border:0;border-radius:10px;background:var(--navy);color:#fff;font:700 12px Montserrat,Arial,sans-serif;padding:11px 14px;cursor:pointer}
+.btn:hover{filter:brightness(1.12)}
+.btn.alt{background:#e5f2f6;color:#0c4c66}
+.btn.cyan{background:var(--cyan)}
+.btn.danger{background:#fbeaea;color:#a02a2a}
+.btn:disabled{opacity:.55;cursor:wait}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.slide-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
+.tab{border:1px solid #c6dbe3;border-radius:9px;background:#f4f9fb;color:#1e5268;padding:10px 12px;font:700 12px Montserrat,Arial;cursor:pointer}
+.tab small{display:block;font-weight:500;font-size:10px;opacity:.75;margin-top:2px}
+.tab.cta{border-style:dashed}
+.tab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.slide-actions{margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--border)}
+.preview-panel{position:sticky;top:15px;align-self:start}
+.canvas-wrap{max-width:540px;margin:auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 8px 28px #173a4d25}
+canvas{display:block;width:100%;height:auto;aspect-ratio:4/5}
+.preview-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:16px;gap:10px}
+.status{font-size:12px;color:#5b7482}.status.warn{color:#b14e19;font-weight:700}
+.notice{background:#edf9fb;border-left:3px solid var(--cyan);padding:12px;font-size:11px;line-height:1.7;border-radius:4px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 2px}
+.chip{border:1px solid #c6dbe3;background:#f4f9fb;color:#1e4f66;border-radius:7px;padding:6px 9px;font:700 11px Montserrat,Arial;cursor:pointer}
+.chip.on{background:var(--cyan);border-color:var(--cyan);color:#fff}
+.check{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;margin-top:30px}
+.hidden{display:none!important}
+footer{font-size:11px;color:#648094;padding:0 24px 25px;max-width:1470px;margin:auto}
+@media(max-width:950px){.layout{grid-template-columns:1fr}.preview-panel{position:static;order:-1}.canvas-wrap{max-width:430px}}
+@media(max-width:520px){.layout{padding:12px;gap:12px}.panel{padding:16px}header{padding:18px}header h1{font-size:15px}.tag{display:none}.row{flex-direction:column;gap:0}.check{margin-top:0;margin-bottom:15px}}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>ASSOPOKER <span style="color:#58d0e7">/</span> GALLERY INTERVISTE</h1><p>Generatore editoriale · 4:5 · 1080 × 1350 px</p></div>
+  <span class="tag">VERSIONE 3.0 · LOCALE</span>
+</header>
+
+<main class="layout">
+<section>
+
+  <div class="panel">
+    <h2>01 / Impostazioni gallery</h2>
+    <div class="row">
+      <div class="field"><label for="person">Nome intervistato</label><input id="person" type="text" placeholder="Nome e cognome"></div>
+      <label class="check"><input type="checkbox" id="upper" checked> Citazioni in MAIUSCOLO</label>
+    </div>
+    <div class="notice">Ogni slide ha la propria fotografia. Il testo della citazione si ridimensiona da solo in base alla lunghezza, quindi non serve più sistemarlo a mano. Per evidenziare in azzurro, clicca sulle parole sotto la citazione.</div>
+  </div>
+
+  <div class="panel">
+    <h2>02 / Slide</h2>
+    <div class="slide-tabs" id="tabs"></div>
+    <div class="actions slide-actions">
+      <button class="btn alt" id="addQuote">+ Citazione</button>
+      <button class="btn alt" id="addCta">+ CTA</button>
+      <button class="btn alt" id="dupSlide">Duplica</button>
+      <button class="btn alt" id="moveL">◀ Sposta</button>
+      <button class="btn alt" id="moveR">Sposta ▶</button>
+      <button class="btn danger" id="delSlide">Elimina</button>
+    </div>
+
+    <div class="field"><label>Fotografia della slide</label><input type="file" id="photo" accept="image/*"></div>
+    <div class="row">
+      <div class="field"><label>Zoom</label><input type="range" id="zoom" min="100" max="250" value="100"></div>
+      <div class="field"><label>Posizione orizzontale</label><input type="range" id="posX" min="0" max="100" value="50"></div>
+      <div class="field"><label>Posizione verticale</label><input type="range" id="posY" min="0" max="100" value="50"></div>
+    </div>
+
+    <div id="quoteControls">
+      <div class="field"><label>Citazione (testo esatto)</label>
+        <textarea id="quote" placeholder="Incolla qui la citazione…"></textarea>
+        <div class="chips" id="chips"></div>
+        <p class="hint">Clicca sulle parole per evidenziarle in azzurro (oppure scrivile tra asterischi: *così*). <span id="charcount"></span></p>
+      </div>
+      <div class="field"><label for="fontmode">Dimensione carattere</label>
+        <select id="fontmode"><option value="auto">Automatica (consigliata)</option><option value="58">58 px · molto grande</option><option value="52">52 px · grande</option><option value="46">46 px · media</option><option value="40">40 px · compatta</option><option value="34">34 px · minima</option></select></div>
+    </div>
+
+    <div id="ctaControls" class="hidden">
+      <div class="notice">Testo fisso: <b>LEGGI L'INTERVISTA COMPLETA SU ASSOPOKER.COM</b>. Non è richiesto un link all'articolo.</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>03 / Esporta e conserva</h2>
+    <div class="actions">
+      <button class="btn cyan" id="exportAll">Esporta gallery ZIP</button>
+      <button class="btn" id="exportOne">Scarica JPG attuale</button>
+      <button class="btn alt" id="save">Salva progetto</button>
+      <button class="btn alt" id="loadBtn">Apri progetto</button>
+      <input type="file" id="load" accept="application/json,.json" class="hidden">
+    </div>
+    <p class="hint">Il progetto JSON conserva foto, citazioni e impostazioni: puoi riaprirlo in seguito (anche i progetti salvati con le versioni 2.x). L'esportazione ZIP produce JPG numerati nell'ordine della gallery.</p>
+  </div>
+</section>
+
+<aside class="panel preview-panel">
+  <h2>Anteprima · <span id="previewLabel">Slide 1</span></h2>
+  <div class="canvas-wrap"><canvas id="canvas" width="1080" height="1350"></canvas></div>
+  <div class="preview-bottom">
+    <span id="status" class="status">Pronta per l'esportazione</span>
+    <div class="actions"><button class="btn alt" id="prev">←</button><button class="btn alt" id="next">→</button></div>
+  </div>
+  <p class="hint">L'anteprima mostra il JPG finale. Nessuna foto viene inviata a server. Per Montserrat apri il file con connessione Internet oppure installa il font sul computer.</p>
+</aside>
+</main>
+<footer>Assopoker · Template editoriale interno. Verificare sempre l'esattezza delle citazioni e l'inquadratura prima della pubblicazione.</footer>
+
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const W = 1080, H = 1350;
+const canvas = $('canvas'), ctx = canvas.getContext('2d');
+const NAVY = '#0b3155', DEEP = '#082b4b', CYAN = '#00a5c8', LIGHT = '#b7e5ee', WHITE = '#ffffff';
+const FONT = 'Montserrat, Arial, sans-serif';
+const QA = { x: 158, y: 977, w: 790, h: 318 };   // area della citazione
+const MAXSIZE = 61, MINSIZE = 30;
+
+const newSlide = (o = {}) => ({ type: 'quote', photo: '', zoom: 100, posX: 50, posY: 50, quote: '', fontmode: 'auto', ...o });
+let state = {
+  person: 'Giada Fang', upper: true,
+  slides: [
+    newSlide({ quote: 'È VERO CHE IL POKER MODERNO È FONDATO SULLA GTO, PERÒ IN ITALIA *IL FIELD NON È SICURAMENTE GTO*' }),
+    newSlide(), newSlide(), newSlide(),
+    newSlide({ type: 'cta' })
+  ]
+};
+let active = 0, exporting = false, rid = 0;
+const cache = new Map();
+const cur = () => state.slides[active];
+
+/* ---------- Utilità ---------- */
+function setStatus(t, warn = false) { $('status').textContent = t; $('status').className = 'status' + (warn ? ' warn' : ''); }
+function setFont(size, weight = 800) { ctx.font = `${weight} ${size}px ${FONT}`; }
+function imageOf(src) {
+  if (!src) return Promise.resolve(null);
+  if (!cache.has(src)) cache.set(src, new Promise(r => { const im = new Image(); im.onload = () => r(im); im.onerror = () => r(null); im.src = src; }));
+  return cache.get(src);
+}
+function loadFile(file, max, mime, q) {
+  return new Promise((res, rej) => {
+    const fr = new FileReader();
+    fr.onerror = () => rej(Error('Lettura del file non riuscita'));
+    fr.onload = () => {
+      const im = new Image();
+      im.onerror = () => rej(Error('Immagine non leggibile'));
+      im.onload = () => {
+        const k = Math.min(1, max / Math.max(im.width, im.height));
+        const c = document.createElement('canvas'); c.width = Math.round(im.width * k); c.height = Math.round(im.height * k);
+        const x = c.getContext('2d'); x.fillStyle = '#000'; x.fillRect(0, 0, c.width, c.height);
+        x.drawImage(im, 0, 0, c.width, c.height); res(c.toDataURL(mime, q));
+      };
+      im.src = fr.result;
+    };
+    fr.readAsDataURL(file);
+  });
+}
+function polygon(pts, color) { ctx.beginPath(); ctx.moveTo(...pts[0]); for (let i = 1; i < pts.length; i++) ctx.lineTo(...pts[i]); ctx.closePath(); ctx.fillStyle = color; ctx.fill(); }
+
+/* ---------- Markup citazione: *parole evidenziate* ---------- */
+function parseMarkup(str) {
+  const tokens = []; let hl = false, cur = '', curHl = false;
+  const push = () => { if (cur) { tokens.push({ w: cur, hl: curHl }); cur = ''; } };
+  for (const ch of str) {
+    if (ch === '*') { hl = !hl; continue; }
+    if (/\s/.test(ch)) { push(); continue; }
+    if (!cur) curHl = hl;
+    cur += ch;
+  }
+  push(); return tokens;
+}
+function serialize(tokens) {
+  const out = []; let run = [];
+  const flush = () => { if (run.length) { out.push('*' + run.join(' ') + '*'); run = []; } };
+  for (const t of tokens) { if (t.hl) run.push(t.w); else { flush(); out.push(t.w); } }
+  flush(); return out.join(' ');
+}
+
+/* ---------- Impaginazione ---------- */
+function lineWidth(line) {
+  const sp = ctx.measureText(' ').width;
+  return line.reduce((a, t, i) => a + ctx.measureText(t.w).width + (i ? sp : 0), 0);
+}
+function balancedWrap(tokens, size, maxW) {
+  setFont(size, 800);
+  const n = tokens.length; if (!n) return [];
+  const widths = tokens.map(t => ctx.measureText(t.w).width), sp = ctx.measureText(' ').width;
+  const dp = Array(n + 1).fill(Infinity), nxt = Array(n).fill(n); dp[n] = 0;
+  for (let i = n - 1; i >= 0; i--) {
+    let w = 0;
+    for (let j = i; j < n; j++) {
+      w += widths[j] + (j > i ? sp : 0);
+      if (w > maxW && j > i) break;
+      const last = j === n - 1, full = Math.min(w / maxW, 1);
+      let pen = Math.pow(1 - full, 2) * (last ? .2 : 1.3);
+      if (last && full < .36) pen += .48;
+      if (!last && tokens[j].w.replace(/[^\p{L}\p{N}]/gu, '').length <= 2) pen += .45;
+      if (w > maxW) pen += 5;
+      const sc = pen + dp[j + 1] + .13;
+      if (sc < dp[i]) { dp[i] = sc; nxt[i] = j + 1; }
+    }
+  }
+  const lines = []; for (let i = 0; i < n;) { const j = nxt[i]; lines.push(tokens.slice(i, j)); i = j; }
+  return lines;
+}
+function quoteLayout(s) {
+  const tokens = parseMarkup(s.quote).map(t => ({ ...t, w: state.upper ? t.w.toLocaleUpperCase('it') : t.w }));
+  const manual = s.fontmode !== 'auto';
+  let size = manual ? Number(s.fontmode) : MAXSIZE, lines, lead;
+  for (;;) {
+    lines = balancedWrap(tokens, size, QA.w); lead = size * 1.17;
+    setFont(size, 800);
+    const wide = lines.some(l => lineWidth(l) > QA.w + 1);
+    if (manual || (lines.length * lead <= QA.h && !wide) || size <= MINSIZE) break;
+    size--;
+  }
+  setFont(size, 800);
+  const overflow = lines.length * lead > QA.h || lines.some(l => lineWidth(l) > QA.w + 1);
+  return { tokens, lines, size, lead, overflow };
+}
+
+/* ---------- Disegno ---------- */
+function photoFill(im, s, h) {
+  ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, h); ctx.clip();
+  if (im) {
+    const sc = Math.max(W / im.width, h / im.height) * (s.zoom / 100), sw = im.width * sc, sh = im.height * sc;
+    ctx.drawImage(im, (W - sw) * s.posX / 100, (h - sh) * s.posY / 100, sw, sh);
+  } else {
+    const g = ctx.createLinearGradient(0, 0, W, h);
+    g.addColorStop(0, '#133b57'); g.addColorStop(.5, '#0b6c8c'); g.addColorStop(1, '#e0eff3');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, h);
+    ctx.textAlign = 'center'; ctx.fillStyle = '#ffffffb0'; setFont(28, 600); ctx.fillText('CARICA UNA FOTOGRAFIA', W / 2, h / 2);
+  }
+  ctx.restore();
+}
+// Marchio discreto nell'angolo: solo fumetto.
+function heading() {
+  ctx.save(); ctx.translate(82, 91);
+  ctx.fillStyle = 'rgba(8,43,75,.93)'; ctx.beginPath(); ctx.arc(0, 0, 57, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = CYAN; ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(0, 0, 57, 0, Math.PI * 2); ctx.stroke();
+  ctx.strokeStyle = WHITE; ctx.lineWidth = 8; ctx.lineJoin = 'round'; ctx.beginPath();
+  ctx.moveTo(-18, -25); ctx.bezierCurveTo(-39, -25, -39, -7, -35, 8); ctx.bezierCurveTo(-32, 22, -20, 25, -15, 25);
+  ctx.lineTo(-22, 40); ctx.lineTo(4, 24); ctx.bezierCurveTo(27, 24, 36, 10, 34, -8); ctx.bezierCurveTo(32, -22, 18, -25, 4, -25); ctx.closePath(); ctx.stroke();
+  ctx.fillStyle = WHITE; ctx.beginPath(); ctx.arc(-10, 0, 4, 0, Math.PI * 2); ctx.arc(10, 0, 4, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+}
+// Nuovo divisorio: taglio diagonale netto con due fasce, che riprende la diagonale dell'angolo in basso.
+// (y0 = quota del bordo a sinistra, y1 = a destra; sotto il bordo si riempie con "below").
+function divider(y0, y1, below, outer) {
+  const band = (d1, d2, c) => polygon([[0, y0 - d2], [W, y1 - d2], [W, y1 - d1], [0, y0 - d1]], c);
+  band(0, 12, CYAN);
+  band(12, 21, outer);
+  polygon([[0, y0], [W, y1], [W, H], [0, H]], below);
+}
+function corner(x0 = 850, y0 = 1140) {
+  polygon([[x0, 1350], [1080, y0], [1080, 1350]], LIGHT);
+  polygon([[x0 + 35, 1350], [1080, y0 + 33], [1080, 1350]], CYAN);
+  polygon([[x0 + 96, 1350], [1080, y0 + 87], [1080, 1350]], DEEP);
+}
+function drawName() {
+  const name = state.person || 'Nome intervistato';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic'; ctx.fillStyle = DEEP;
+  let size = 41; setFont(size); while (ctx.measureText(name).width > 600 && size > 26) { size--; setFont(size); }
+  ctx.fillText(name, 540, 940);
+  const nw = ctx.measureText(name).width;
+  ctx.fillStyle = CYAN;
+  const lineEnd = Math.max(230, 540 - nw / 2 - 42); ctx.fillRect(184, 924, Math.max(35, lineEnd - 184), 5);
+  const rs = Math.min(850, 540 + nw / 2 + 42); ctx.fillRect(rs, 924, Math.max(35, 896 - rs), 5);
+}
+function drawQuote(L) {
+  const { lines, size, lead } = L;
+  ctx.textBaseline = 'top'; ctx.textAlign = 'left';
+  const top = QA.y + (QA.h - lines.length * lead) / 2;
+  ctx.fillStyle = CYAN; ctx.font = '900 112px Georgia, serif'; ctx.fillText('“', 49, top - 26);
+  setFont(size, 800); const sp = ctx.measureText(' ').width;
+  lines.forEach((line, i) => {
+    let x = QA.x; const y = top + i * lead;
+    for (const t of line) { ctx.fillStyle = t.hl ? CYAN : NAVY; ctx.fillText(t.w, x, y); x += ctx.measureText(t.w).width + sp; }
+  });
+  const endX = QA.x + (lines.length ? lineWidth(lines[lines.length - 1]) : 0);
+  ctx.font = '900 86px Georgia, serif'; ctx.fillStyle = CYAN;
+  const cw = ctx.measureText('”').width, cx = Math.min(W - cw - 36, Math.max(QA.x + 20, endX + 12));
+  ctx.fillText('”', cx, top + (lines.length - 1) * lead - 12);
+}
+function drawCTA() {
+  divider(715, 655, DEEP, LIGHT);
+  ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic'; ctx.fillStyle = WHITE; setFont(70);
+  ctx.fillText('LEGGI L’INTERVISTA', 78, 826); ctx.fillText('COMPLETA SU', 78, 919);
+  const bx = 78, by = 971, bw = 924, bh = 136;
+  polygon([[bx + 20, by], [bx + bw, by], [bx + bw - 20, by + bh], [bx, by + bh]], CYAN);
+  setFont(69); ctx.fillStyle = WHITE; ctx.textAlign = 'center'; ctx.fillText('ASSOPOKER.COM', bx + bw / 2, by + 91); ctx.textAlign = 'left';
+  corner(835, 1145);
+}
+async function paint(i, guard) {
+  const s = state.slides[i], im = await imageOf(s.photo);
+  if (guard !== undefined && guard !== rid) return null;
+  ctx.clearRect(0, 0, W, H); ctx.fillStyle = WHITE; ctx.fillRect(0, 0, W, H);
+  if (s.type === 'cta') {
+    ctx.fillStyle = DEEP; ctx.fillRect(0, 0, W, H);
+    photoFill(im, s, 740); drawCTA(); return { cta: true };
+  }
+  photoFill(im, s, 880); divider(858, 796, WHITE, DEEP); heading(); drawName();
+  const L = quoteLayout(s); if (L.tokens.length) drawQuote(L);
+  corner(); return { L };
+}
+function draw() {
+  if (exporting) return;
+  const g = ++rid;
+  paint(active, g).then(r => {
+    if (!r) return; const s = cur(), noPhoto = !s.photo;
+    if (r.cta) return setStatus(noPhoto ? 'CTA · manca la foto' : 'CTA pronta', noPhoto);
+    const L = r.L;
+    if (!L.tokens.length) setStatus('Inserisci la citazione', true);
+    else if (L.overflow) setStatus('Citazione troppo lunga: riduci il testo o il font', true);
+    else setStatus(`${L.lines.length} righe · font ${L.size}px` + (noPhoto ? ' · manca la foto' : ''), noPhoto);
+  });
+}
+
+/* ---------- Interfaccia ---------- */
+function buildTabs() {
+  const el = $('tabs'); el.innerHTML = '';
+  state.slides.forEach((s, i) => {
+    const b = document.createElement('button'); b.className = 'tab' + (i === active ? ' active' : '') + (s.type === 'cta' ? ' cta' : '');
+    b.innerHTML = `Slide ${i + 1}<small>${s.type === 'cta' ? 'CTA finale' : 'Citazione'}</small>`;
+    b.onclick = () => { active = i; refresh(); }; el.appendChild(b);
+  });
+}
+function buildChips() {
+  const el = $('chips'); el.innerHTML = '';
+  if (cur().type === 'cta') return;
+  const tokens = parseMarkup(cur().quote);
+  tokens.forEach(t => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'chip' + (t.hl ? ' on' : ''); b.textContent = t.w;
+    b.onclick = () => { t.hl = !t.hl; cur().quote = serialize(tokens); $('quote').value = cur().quote; buildChips(); draw(); };
+    el.appendChild(b);
+  });
+}
+function refresh() {
+  const s = cur(), isCta = s.type === 'cta';
+  buildTabs();
+  $('person').value = state.person; $('upper').checked = state.upper;
+  $('quoteControls').classList.toggle('hidden', isCta); $('ctaControls').classList.toggle('hidden', !isCta);
+  $('zoom').value = s.zoom; $('posX').value = s.posX; $('posY').value = s.posY; $('photo').value = '';
+  $('quote').value = s.quote; $('fontmode').value = s.fontmode;
+  $('charcount').textContent = s.quote.replace(/\*/g, '').length + ' caratteri';
+  $('previewLabel').textContent = 'Slide ' + (active + 1) + ' di ' + state.slides.length + (isCta ? ' · CTA' : '');
+  buildChips(); draw();
+}
+$('person').oninput = e => { state.person = e.target.value; draw(); };
+$('upper').onchange = e => { state.upper = e.target.checked; draw(); };
+const bindSlide = (id, key, fn = v => v, ev = 'input') => $(id)[ev === 'change' ? 'onchange' : 'oninput'] = e => { cur()[key] = fn(e.target.value); draw(); };
+['zoom', 'posX', 'posY'].forEach(k => bindSlide(k, k, Number)); bindSlide('fontmode', 'fontmode', v => v, 'change');
+$('quote').oninput = e => { cur().quote = e.target.value; $('charcount').textContent = e.target.value.replace(/\*/g, '').length + ' caratteri'; buildChips(); draw(); };
+$('photo').onchange = async e => {
+  const f = e.target.files && e.target.files[0]; if (!f) return;
+  if (!f.type.startsWith('image/')) return alert('Seleziona un file immagine.');
+  try { cur().photo = await loadFile(f, 2000, 'image/jpeg', .92); } catch (err) { alert(err.message); }
+  e.target.value = ''; draw();
+};
+
+const MAXS = 10;
+function addSlide(o) { if (state.slides.length >= MAXS) return alert('Massimo ' + MAXS + ' slide per gallery.'); state.slides.splice(active + 1, 0, newSlide(o)); active++; refresh(); }
+$('addQuote').onclick = () => addSlide({});
+$('addCta').onclick = () => addSlide({ type: 'cta' });
+$('dupSlide').onclick = () => { if (state.slides.length >= MAXS) return alert('Massimo ' + MAXS + ' slide per gallery.'); state.slides.splice(active + 1, 0, JSON.parse(JSON.stringify(cur()))); active++; refresh(); };
+$('delSlide').onclick = () => { if (state.slides.length < 2) return alert('Serve almeno una slide.'); if (!confirm('Eliminare la slide ' + (active + 1) + '?')) return; state.slides.splice(active, 1); active = Math.min(active, state.slides.length - 1); refresh(); };
+const move = d => { const j = active + d; if (j < 0 || j >= state.slides.length) return; [state.slides[active], state.slides[j]] = [state.slides[j], state.slides[active]]; active = j; refresh(); };
+$('moveL').onclick = () => move(-1); $('moveR').onclick = () => move(1);
+$('prev').onclick = () => { active = (active + state.slides.length - 1) % state.slides.length; refresh(); };
+$('next').onclick = () => { active = (active + 1) % state.slides.length; refresh(); };
+
+/* ---------- Esportazione ---------- */
+function downloadBlob(blob, name) { const a = document.createElement('a'), u = URL.createObjectURL(blob); a.href = u; a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(u), 20000); }
+const jpg = () => new Promise(r => canvas.toBlob(r, 'image/jpeg', .94));
+function cleanName() { return (state.person || 'intervista').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/gi, '_').replace(/^_|_$/g, '').toLowerCase() || 'intervista'; }
+async function loadFonts() { try { await Promise.all([500, 600, 800, 900].map(w => document.fonts.load(`${w} 40px Montserrat`))); await document.fonts.ready; } catch (e) { } }
+const slideName = i => `${cleanName()}_${String(i + 1).padStart(2, '0')}_${state.slides[i].type === 'cta' ? 'cta' : 'citazione'}.jpg`;
+
+$('exportOne').onclick = async () => { await loadFonts(); await paint(active); downloadBlob(await jpg(), slideName(active)); draw(); };
+$('exportAll').onclick = async e => {
+  const miss = []; state.slides.forEach((s, i) => { if (!s.photo) miss.push('foto slide ' + (i + 1)); if (s.type === 'quote' && !s.quote.trim()) miss.push('citazione slide ' + (i + 1)); });
+  if (miss.length && !confirm('Mancano: ' + miss.join(', ') + '.\n\nEsportare comunque?')) return;
+  const b = e.target; b.disabled = true; b.textContent = 'Preparazione ZIP…'; exporting = true;
+  try {
+    await loadFonts(); const entries = [];
+    for (let i = 0; i < state.slides.length; i++) {
+      await paint(i); const blob = await jpg();
+      entries.push({ name: slideName(i), data: new Uint8Array(await blob.arrayBuffer()) });
+    }
+    downloadBlob(zip(entries), `gallery_intervista_${cleanName()}.zip`);
+  } catch (err) { alert('Errore durante l’esportazione: ' + err.message); }
+  finally { exporting = false; b.disabled = false; b.textContent = 'Esporta gallery ZIP'; draw(); }
+};
+
+/* ---------- Salvataggio progetto (compatibile con le versioni 2.x) ---------- */
+$('save').onclick = () => downloadBlob(new Blob([JSON.stringify({ version: 3, type: 'interview', ...state }, null, 2)], { type: 'application/json' }), `progetto_${cleanName()}.json`);
+$('loadBtn').onclick = () => $('load').click();
+function markPhrases(quote, phrases) {
+  const tokens = parseMarkup(quote);
+  for (const ph of phrases) {
+    const words = (ph || '').trim().split(/\s+/).filter(Boolean).map(w => w.toLocaleLowerCase('it')); if (!words.length) continue;
+    for (let i = 0; i + words.length <= tokens.length; i++) {
+      if (words.every((w, k) => tokens[i + k].w.toLocaleLowerCase('it') === w)) { for (let k = 0; k < words.length; k++) tokens[i + k].hl = true; break; }
+    }
+  }
+  return serialize(tokens);
+}
+$('load').onchange = async e => {
+  const f = e.target.files && e.target.files[0]; if (!f) return;
+  try {
+    const d = JSON.parse(await f.text());
+    if (!Array.isArray(d.slides) || !d.slides.length) throw Error('formato non valido');
+    if (d.type === 'news') throw Error('questo è un progetto News');
+    let slides;
+    if (d.type === 'interview') slides = d.slides.slice(0, MAXS).map(s => newSlide(s));
+    else if (d.cta && [4, 5].includes(d.count)) {   // progetto delle versioni 2.x
+      slides = d.slides.slice(0, d.count).map(s => newSlide({ photo: s.photo || '', zoom: s.zoom || 100, posY: s.pos ?? 50, fontmode: s.fontmode || 'auto', quote: markPhrases(s.quote || '', [s.highlight, s.highlight2]) }));
+      slides.push(newSlide({ type: 'cta', photo: d.cta.photo || '', zoom: d.cta.zoom || 100, posY: d.cta.pos ?? 50 }));
+    } else throw Error('formato non valido');
+    state = { person: String(d.person || ''), upper: d.upper !== false, slides };
+    cache.clear(); active = 0; refresh();
+  } catch (err) { alert('Impossibile aprire il progetto: ' + err.message); }
+  e.target.value = '';
+};
+
+/* ---------- ZIP senza librerie (STORE) ---------- */
+const crcTable = (() => { const t = []; for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+function crc32(bytes) { let c = 0xffffffff; for (const b of bytes) c = crcTable[(c ^ b) & 255] ^ (c >>> 8); return (c ^ 0xffffffff) >>> 0; }
+function zip(entries) {
+  const enc = new TextEncoder(), parts = [], central = []; let offset = 0;
+  for (const { name, data: d } of entries) {
+    const n = enc.encode(name), crc = crc32(d), local = new Uint8Array(30 + n.length), v = new DataView(local.buffer);
+    v.setUint32(0, 0x04034b50, true); v.setUint16(4, 20, true); v.setUint32(14, crc, true); v.setUint32(18, d.length, true); v.setUint32(22, d.length, true); v.setUint16(26, n.length, true); local.set(n, 30);
+    parts.push(local, d);
+    const cent = new Uint8Array(46 + n.length), cv = new DataView(cent.buffer);
+    cv.setUint32(0, 0x02014b50, true); cv.setUint16(4, 20, true); cv.setUint16(6, 20, true); cv.setUint32(16, crc, true); cv.setUint32(20, d.length, true); cv.setUint32(24, d.length, true); cv.setUint16(28, n.length, true); cv.setUint32(42, offset, true); cent.set(n, 46);
+    central.push(cent); offset += local.length + d.length;
+  }
+  const size = central.reduce((a, c) => a + c.length, 0), end = new Uint8Array(22), ev = new DataView(end.buffer);
+  ev.setUint32(0, 0x06054b50, true); ev.setUint16(8, entries.length, true); ev.setUint16(10, entries.length, true); ev.setUint32(12, size, true); ev.setUint32(16, offset, true);
+  return new Blob([...parts, ...central, end], { type: 'application/zip' });
+}
+
+loadFonts().then(refresh); refresh();
+</script>
+</body>
+</html>
