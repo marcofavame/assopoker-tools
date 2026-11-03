@@ -76,6 +76,9 @@ footer{font-size:11px;color:#648094;padding:0 24px 25px;max-width:1470px;margin:
       <div class="field"><label for="fade">Intensità sfumatura scura</label><input id="fade" type="range" min="50" max="100" value="92"></div>
       <label class="check"><input type="checkbox" id="upper" checked> Titoli in MAIUSCOLO</label>
     </div>
+    <div class="field"><label for="icon">Icona identificativa in alto a sinistra</label>
+      <select id="icon"><option value="paper">Giornale</option><option value="mega">Megafono</option><option value="mic">Microfono</option><option value="none">Nessuna icona</option></select>
+      <p class="hint">Stesso cerchio (dimensione, posizione e colori) del format Interviste, che usa il microfono: serve a mantenere uniforme il profilo Instagram.</p></div>
     <div class="field"><label>Logo in basso a destra (opzionale)</label>
       <input type="file" id="logo" accept="image/*"> <button class="btn alt" id="logoReset" style="padding:7px 10px;margin-left:6px">Usa quello standard</button>
       <p class="hint">Se non carichi nulla viene usato un logo ASSOPOKER vettoriale. Meglio un PNG bianco con sfondo trasparente.</p></div>
@@ -176,7 +179,7 @@ const newSlide = (o = {}) => ({
 });
 
 let state = {
-  name: 'news', label: 'NEWS ANSA', fade: 92, upper: true, logo: '',
+  name: 'news', label: 'NEWS ANSA', fade: 92, upper: true, logo: '', icon: 'paper',
   slides: [
     newSlide({ title: '*NUOVI GUAI* COL *FISCO* PER *ENRICO CAMOSCI:* CONTESTATA DALLA GDF LA SUA *RESIDENZA* A *MALTA*' }),
     newSlide({ layout: 'text', title: 'IL *CONTESTO* DELLA VICENDA', body: 'Inserisci qui il testo di approfondimento.\nIl carattere si adatta automaticamente alla lunghezza: se scrivi di più il testo si rimpicciolisce, se scrivi meno si ingrandisce.' })
@@ -339,6 +342,29 @@ function sticker(im, s) {
   ctx.shadowColor = 'rgba(0,0,0,.35)'; ctx.shadowBlur = 24; ctx.shadowOffsetY = 8;
   ctx.drawImage(im, -w / 2, -h / 2, w, h); ctx.restore();
 }
+// Icona identificativa del format: stesso cerchio (posizione, dimensione, colori) del format Interviste.
+function badge() {
+  if (state.icon === 'none') return;
+  ctx.save(); ctx.translate(82, 91);
+  ctx.fillStyle = 'rgba(7,18,31,.93)'; ctx.beginPath(); ctx.arc(0, 0, 57, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = C.teal; ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(0, 0, 57, 0, Math.PI * 2); ctx.stroke();
+  ctx.strokeStyle = C.white; ctx.fillStyle = C.white; ctx.lineWidth = 7; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  if (state.icon === 'paper') {
+    ctx.beginPath(); ctx.roundRect(-30, -28, 60, 56, 6); ctx.stroke();
+    ctx.fillRect(-20, -18, 16, 14);
+    ctx.lineWidth = 5; ctx.beginPath();
+    ctx.moveTo(5, -14); ctx.lineTo(20, -14); ctx.moveTo(5, -4); ctx.lineTo(20, -4);
+    ctx.moveTo(-20, 8); ctx.lineTo(20, 8); ctx.moveTo(-20, 18); ctx.lineTo(20, 18); ctx.stroke();
+  } else if (state.icon === 'mega') {
+    ctx.beginPath(); ctx.moveTo(-30, -9); ctx.lineTo(-8, -9); ctx.lineTo(24, -28); ctx.lineTo(24, 28); ctx.lineTo(-8, 9); ctx.lineTo(-30, 9); ctx.closePath(); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-20, 9); ctx.lineTo(-14, 29); ctx.stroke();
+  } else {  // microfono
+    ctx.beginPath(); ctx.roundRect(-12, -36, 24, 40, 12); ctx.stroke();
+    ctx.beginPath(); ctx.arc(0, -4, 23, 0, Math.PI); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, 19); ctx.lineTo(0, 32); ctx.moveTo(-13, 32); ctx.lineTo(13, 32); ctx.stroke();
+  }
+  ctx.restore();
+}
 function drawLogo(im) {
   const right = W - MX, cy = FOOT_Y;
   if (im) { const h = 46, w = im.width / im.height * h; ctx.drawImage(im, right - w, cy - h / 2, w, h); return right - w; }
@@ -362,7 +388,7 @@ async function paint(i, guard) {
   const L = layoutFor(s), label = (s.label.trim() || state.label.trim()), lh = label ? LABEL_H : 0;
   const top = BOTTOM - L.total, blockTop = top - lh;
 
-  photoFill(im, s); fade(blockTop); sticker(st, s);
+  photoFill(im, s); fade(blockTop); sticker(st, s); badge();
 
   ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
   if (label) {
@@ -423,7 +449,7 @@ function buildChips() {
 function refresh() {
   const s = cur();
   buildTabs();
-  $('name').value = state.name; $('label').value = state.label; $('fade').value = state.fade; $('upper').checked = state.upper;
+  $('name').value = state.name; $('label').value = state.label; $('fade').value = state.fade; $('upper').checked = state.upper; $('icon').value = state.icon;
   $('layout').value = s.layout; $('fontmode').value = s.fontmode;
   $('zoom').value = s.zoom; $('posX').value = s.posX; $('posY').value = s.posY;
   $('slabel').value = s.label; $('title').value = s.title; $('body').value = s.body;
@@ -435,7 +461,7 @@ function refresh() {
   buildChips(); draw();
 }
 const bindState = (id, key, fn = v => v, ev = 'input') => $(id)[ev === 'change' ? 'onchange' : 'oninput'] = e => { state[key] = fn(e.target.type === 'checkbox' ? e.target.checked : e.target.value); draw(); };
-bindState('name', 'name'); bindState('label', 'label'); bindState('fade', 'fade', Number); bindState('upper', 'upper', Boolean, 'change');
+bindState('name', 'name'); bindState('label', 'label'); bindState('fade', 'fade', Number); bindState('upper', 'upper', Boolean, 'change'); bindState('icon', 'icon', v => v, 'change');
 const bindSlide = (id, key, fn = v => v, ev = 'input') => $(id)[ev === 'change' ? 'onchange' : 'oninput'] = e => { cur()[key] = fn(e.target.value); draw(); };
 bindSlide('fontmode', 'fontmode', v => v, 'change'); bindSlide('slabel', 'label');
 ['zoom', 'posX', 'posY', 'stScale', 'stRot', 'stX', 'stY'].forEach(k => bindSlide(k, k, Number));
@@ -493,7 +519,7 @@ $('load').onchange = async e => {
   try {
     const d = JSON.parse(await f.text());
     if (!Array.isArray(d.slides) || !d.slides.length || d.type !== 'news') throw Error('non è un progetto News valido');
-    state = { name: String(d.name || 'news'), label: String(d.label ?? 'NEWS ANSA'), fade: Number(d.fade) || 92, upper: d.upper !== false, logo: d.logo || '', slides: d.slides.slice(0, 10).map(s => newSlide(s)) };
+    state = { name: String(d.name || 'news'), label: String(d.label ?? 'NEWS ANSA'), fade: Number(d.fade) || 92, upper: d.upper !== false, logo: d.logo || '', icon: ['mic', 'paper', 'mega', 'none'].includes(d.icon) ? d.icon : 'paper', slides: d.slides.slice(0, 10).map(s => newSlide(s)) };
     cache.clear(); active = 0; refresh();
   } catch (err) { alert('Impossibile aprire il progetto: ' + err.message); }
   e.target.value = '';
