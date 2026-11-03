@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assopoker · Generatore Consigli</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0a1b2e;--deep:#07121f;--teal:#2b93b6;--bg:#eef3f6;--border:#d7e3e9}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#15334a;font-family:Montserrat,Arial,sans-serif}
+header{background:linear-gradient(110deg,#07121f,#0d3350);color:#fff;padding:23px 30px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+header h1{font-size:19px;margin:0;font-weight:800;letter-spacing:.02em}
+header p{font-size:12px;opacity:.8;margin:5px 0 0}
+.tag{font-size:11px;border:1px solid #5fb3cf;padding:7px 11px;border-radius:30px;white-space:nowrap}
+.layout{max-width:1470px;margin:auto;display:grid;grid-template-columns:minmax(370px,1fr) minmax(420px,1.06fr);gap:24px;padding:24px}
+.panel{background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:0 8px 24px #13364b0c;padding:23px;margin-bottom:18px}
+h2{font-size:15px;margin:0 0 17px;font-weight:800}
+label{font-size:12px;font-weight:700;display:block;margin-bottom:7px}
+.field{margin-bottom:15px}
+input[type=text],textarea,select{width:100%;border:1px solid #cbdbe3;border-radius:9px;padding:12px;font:500 13px Montserrat,Arial,sans-serif;background:#fff;color:#12344a}
+textarea{resize:vertical;min-height:90px;line-height:1.55}
+input[type=file]{font-size:12px;max-width:100%}
+input[type=range]{width:100%;accent-color:var(--teal)}
+.row{display:flex;gap:13px}.row>*{flex:1;min-width:0}
+.hint{font-size:11px;color:#647f90;line-height:1.6;margin:5px 0}
+.btn{border:0;border-radius:10px;background:var(--navy);color:#fff;font:700 12px Montserrat,Arial,sans-serif;padding:11px 14px;cursor:pointer}
+.btn:hover{filter:brightness(1.15)}
+.btn.alt{background:#e5f1f5;color:#0c4c66}
+.btn.teal{background:var(--teal)}
+.btn.danger{background:#fbeaea;color:#a02a2a}
+.btn:disabled{opacity:.55;cursor:wait}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.slide-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
+.tab{border:1px solid #c6dbe3;border-radius:9px;background:#f4f9fb;color:#1e5268;padding:10px 12px;font:700 12px Montserrat,Arial;cursor:pointer}
+.tab small{display:block;font-weight:500;font-size:10px;opacity:.75;margin-top:2px}
+.tab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.slide-actions{margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--border)}
+.preview-panel{position:sticky;top:15px;align-self:start}
+.canvas-wrap{max-width:540px;margin:auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 8px 28px #173a4d25}
+canvas{display:block;width:100%;height:auto;aspect-ratio:4/5}
+.preview-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:16px;gap:10px}
+.status{font-size:12px;color:#5b7482}.status.warn{color:#b14e19;font-weight:700}
+.notice{background:#edf8fb;border-left:3px solid var(--teal);padding:12px;font-size:11px;line-height:1.7;border-radius:4px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 2px;max-height:170px;overflow:auto}
+.chip{border:1px solid #c6dbe3;background:#f4f9fb;color:#1e4f66;border-radius:7px;padding:6px 9px;font:700 11px Montserrat,Arial;cursor:pointer}
+.chip.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.hidden{display:none!important}
+.check{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;margin-top:30px}
+footer{font-size:11px;color:#648094;padding:0 24px 25px;max-width:1470px;margin:auto}
+@media(max-width:950px){.layout{grid-template-columns:1fr}.preview-panel{position:static;order:-1}.canvas-wrap{max-width:430px}}
+@media(max-width:520px){.layout{padding:12px;gap:12px}.panel{padding:16px}header{padding:18px}header h1{font-size:15px}.tag{display:none}.row{flex-direction:column;gap:0}.check{margin-top:0;margin-bottom:15px}}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>ASSOPOKER <span style="color:#5fd0ea">/</span> GALLERY CONSIGLI</h1><p>Generatore editoriale · 4:5 · 1080 × 1350 px</p></div>
+  <span class="tag">VERSIONE 1.0 · LOCALE</span>
+</header>
+
+<main class="layout">
+<section>
+
+  <div class="panel">
+    <h2>01 / Impostazioni gallery</h2>
+    <div class="row">
+      <div class="field"><label for="name">Nome file export</label><input id="name" type="text" placeholder="es. consigli_poker_online"></div>
+      <div class="field"><label for="lead">Parola di raccordo</label><input id="lead" type="text" placeholder="PER…"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label for="number">Numero in copertina (vuoto = automatico)</label><input id="number" type="text" placeholder="automatico"><p class="hint" id="numHint"></p></div>
+      <label class="check"><input type="checkbox" id="upper" checked> Titoli in MAIUSCOLO</label>
+    </div>
+    <div class="field"><label for="icon">Icona in alto a sinistra (copertina)</label>
+      <select id="icon"><option value="bulb">Lampadina</option><option value="star">Stella</option><option value="none">Nessuna icona</option></select></div>
+    <div class="field"><label>Logo in basso a destra (opzionale)</label>
+      <input type="file" id="logo" accept="image/*"> <button class="btn alt" id="logoReset" style="padding:7px 10px;margin-left:6px">Usa quello standard</button>
+      <p class="hint">Senza caricare nulla viene usato il logo ASSOPOKER originale, bianco sulla copertina e scuro sulle slide chiare. Un logo caricato viene colorato in automatico.</p></div>
+    <div class="notice">Il titolo scritto in copertina compare in automatico nell'intestazione di tutte le slide dei consigli, e il numero si aggiorna da solo. Il testo si ridimensiona in base alla lunghezza; per evidenziare in azzurro, clicca sulle parole sotto ai campi.</div>
+  </div>
+
+  <div class="panel">
+    <h2>02 / Slide</h2>
+    <div class="slide-tabs" id="tabs"></div>
+    <div class="actions slide-actions">
+      <button class="btn alt" id="addSlide">+ Aggiungi consiglio</button>
+      <button class="btn alt" id="dupSlide">Duplica</button>
+      <button class="btn alt" id="moveL">◀ Sposta</button>
+      <button class="btn alt" id="moveR">Sposta ▶</button>
+      <button class="btn danger" id="delSlide">Elimina</button>
+    </div>
+
+    <div id="coverOnly">
+      <div class="field"><label>Immagine piccola in copertina (opzionale, in alto a destra)</label><input type="file" id="photo" accept="image/*"> <button class="btn alt" id="photoDel" style="padding:7px 10px;margin-left:6px">Rimuovi</button></div>
+      <div class="row">
+        <div class="field"><label>Zoom</label><input type="range" id="zoom" min="100" max="300" value="100"></div>
+        <div class="field"><label>Posizione orizzontale</label><input type="range" id="posX" min="0" max="100" value="50"></div>
+        <div class="field"><label>Posizione verticale</label><input type="range" id="posY" min="0" max="100" value="50"></div>
+      </div>
+    </div>
+
+    <div class="field"><label id="titleLabel">Titolo</label>
+      <textarea id="title" placeholder="Scrivi qui il titolo…"></textarea>
+      <div class="chips" id="chips"></div>
+      <p class="hint">Clicca sulle parole per evidenziarle in azzurro (oppure scrivile tra asterischi: *così*). <span id="charcount"></span></p>
+    </div>
+
+    <div class="field" id="bodyField"><label>Testo del consiglio</label>
+      <textarea id="body" style="min-height:150px" placeholder="Scrivi qui il testo. Un invio = nuovo paragrafo."></textarea>
+      <div class="chips" id="bchips"></div>
+      <p class="hint">Le parole evidenziate diventano azzurre e in grassetto. <span id="bcount"></span></p></div>
+
+    <div class="row">
+      <div class="field"><label id="tfLabel">Dimensione titolo</label>
+        <select id="tfont"><option value="auto">Automatica (consigliata)</option><option value="1">Massima</option><option value="0.88">Grande</option><option value="0.76">Media</option><option value="0.64">Piccola</option><option value="0.52">Minima</option></select></div>
+      <div class="field" id="bfontField"><label>Dimensione testo</label>
+        <select id="bfont"><option value="auto">Automatica (consigliata)</option><option value="1">Massima</option><option value="0.88">Grande</option><option value="0.76">Media</option><option value="0.64">Piccola</option><option value="0.52">Minima</option></select></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>03 / Esporta e conserva</h2>
+    <div class="actions">
+      <button class="btn teal" id="exportAll">Esporta gallery ZIP</button>
+      <button class="btn" id="exportOne">Scarica JPG attuale</button>
+      <button class="btn alt" id="save">Salva progetto</button>
+      <button class="btn alt" id="loadBtn">Apri progetto</button>
+      <input type="file" id="load" accept="application/json,.json" class="hidden">
+    </div>
+    <p class="hint">Il progetto JSON conserva immagini, testi e impostazioni, così puoi riaprirlo in seguito. L'esportazione ZIP produce JPG numerati nell'ordine della gallery.</p>
+  </div>
+</section>
+
+<aside class="panel preview-panel">
+  <h2>Anteprima · <span id="previewLabel">Copertina</span></h2>
+  <div class="canvas-wrap"><canvas id="canvas" width="1080" height="1350"></canvas></div>
+  <div class="preview-bottom">
+    <span id="status" class="status">Pronta per l'esportazione</span>
+    <div class="actions"><button class="btn alt" id="prev">←</button><button class="btn alt" id="next">→</button></div>
+  </div>
+  <p class="hint">L'anteprima mostra il JPG finale. Nessuna immagine viene inviata a server. Per Montserrat apri il file con connessione Internet oppure installa il font sul computer.</p>
+</aside>
+</main>
+<footer>Assopoker · Template editoriale interno. Verificare sempre testi e inquadratura prima della pubblicazione.</footer>
+
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const W = 1080, H = 1350;
+const canvas = $('canvas'), ctx = canvas.getContext('2d');
+const C = { deep: '#07121f', navy: '#0a1b2e', teal: '#2b93b6', tealD: '#1f86ad', light: '#9fd0e0', ink: '#16324a', white: '#ffffff' };
+const FONT = 'Montserrat, Arial, sans-serif';
+const BRAND_SRC = 'data:image/png;base64,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';
+const brand = { light: null, dark: null };
+const brandReady = new Promise(res => {
+  const im = new Image();
+  im.onload = () => {
+    brand.light = im;
+    const c = document.createElement('canvas'); c.width = im.width; c.height = im.height;
+    const x = c.getContext('2d'); x.drawImage(im, 0, 0);
+    const d = x.getImageData(0, 0, c.width, c.height), p = d.data;
+    for (let i = 0; i < p.length; i += 4) {
+      const f = Math.min(1, Math.max(0, (p[i] - 178) / 77));
+      p[i] = Math.round(138 + (10 - 138) * f); p[i + 1] = Math.round(151 + (27 - 151) * f); p[i + 2] = Math.round(163 + (46 - 163) * f);
+    }
+    x.putImageData(d, 0, 0); brand.dark = c; res();
+  };
+  im.onerror = () => res(); im.src = BRAND_SRC;
+});
+
+const MX = 67, TW = W - MX * 2, FOOT_Y = 1292, BODY_BOTTOM = 1212, MAX_TIPS = 19;
+const RING = { x: 142, y: 635, r: 75 };   // anello del numero
+const TIP_TX = 255;                          // inizio del titolo del consiglio, a destra del numero
+const BODY_TOP = 780;
+const DIV_COVER = [760, 700], DIV_TIP = [470, 410];   // fine della zona scura: [sinistra, destra]
+const newTip = (o = {}) => ({ title: '', body: '', tfont: 'auto', bfont: 'auto', ...o });
+
+let state = {
+  name: 'consigli', lead: 'PER…', number: '', upper: true, icon: 'bulb', logo: '',
+  cover: { title: '*MIGLIORARE* AL *POKER* ONLINE', photo: '', zoom: 100, posX: 50, posY: 50, tfont: 'auto' },
+  tips: [
+    newTip({ title: 'IL *VOLUME* È IL RE', body: 'Più mani giochi, più esperienza accumuli: la *pratica costante* batte qualsiasi trucco.\nFissa un obiettivo di sessioni a settimana e rispettalo.' }),
+    newTip({ title: 'STUDIA LE *RANGE*', body: 'Conoscere le mani con cui aprire da ogni posizione è il *primo passo* verso un gioco solido.' }),
+    newTip({ title: 'GESTISCI IL *BANKROLL*', body: 'Gioca solo ai limiti che il tuo budget consente: è la regola che *salva* i giocatori dalle serie negative.' })
+  ]
+};
+let active = 0, exporting = false, rid = 0;
+const cache = new Map();
+const isCover = () => active === 0;
+const cur = () => isCover() ? state.cover : state.tips[active - 1];
+const total = () => state.tips.length + 1;
+const numText = () => (state.number || '').trim() || String(state.tips.length);
+
+/* ---------- Utilità ---------- */
+function setStatus(t, warn = false) { $('status').textContent = t; $('status').className = 'status' + (warn ? ' warn' : ''); }
+function setFont(size, weight = 800) { ctx.font = `${weight} ${size}px ${FONT}`; }
+function spacing(px) { if ('letterSpacing' in ctx) ctx.letterSpacing = px + 'px'; }
+function imageOf(src) {
+  if (!src) return Promise.resolve(null);
+  if (!cache.has(src)) cache.set(src, new Promise(r => { const im = new Image(); im.onload = () => r(im); im.onerror = () => r(null); im.src = src; }));
+  return cache.get(src);
+}
+function loadFile(file, max, mime, q) {
+  return new Promise((res, rej) => {
+    const fr = new FileReader();
+    fr.onerror = () => rej(Error('Lettura del file non riuscita'));
+    fr.onload = () => {
+      const im = new Image();
+      im.onerror = () => rej(Error('Immagine non leggibile'));
+      im.onload = () => {
+        const k = Math.min(1, max / Math.max(im.width, im.height));
+        const c = document.createElement('canvas'); c.width = Math.round(im.width * k); c.height = Math.round(im.height * k);
+        const x = c.getContext('2d'); if (mime === 'image/jpeg') { x.fillStyle = '#000'; x.fillRect(0, 0, c.width, c.height); }
+        x.drawImage(im, 0, 0, c.width, c.height); res(c.toDataURL(mime, q));
+      };
+      im.src = fr.result;
+    };
+    fr.readAsDataURL(file);
+  });
+}
+function poly(pts, color) { ctx.fillStyle = color; ctx.beginPath(); pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.closePath(); ctx.fill(); }
+
+/* ---------- Markup: *parole evidenziate* (un invio = nuovo paragrafo) ---------- */
+function parseMarkup(str) {
+  const tokens = []; let hl = false, cur = '', curHl = false;
+  const push = () => { if (cur) { tokens.push({ w: cur, hl: curHl }); cur = ''; } };
+  for (const ch of str) {
+    if (ch === '*') { hl = !hl; continue; }
+    if (/\s/.test(ch)) { push(); continue; }
+    if (!cur) curHl = hl;
+    cur += ch;
+  }
+  push(); return tokens;
+}
+function serialize(tokens) {
+  const out = []; let run = [];
+  const flush = () => { if (run.length) { out.push('*' + run.join(' ') + '*'); run = []; } };
+  for (const t of tokens) { if (t.hl) run.push(t.w); else { flush(); out.push(t.w); } }
+  flush(); return out.join(' ');
+}
+const parseParas = str => str.split(/\n/).map(parseMarkup);
+const serializeParas = paras => paras.map(serialize).join('\n');
+
+/* ---------- Impaginazione ---------- */
+function lineWidth(line) {
+  const sp = ctx.measureText(' ').width;
+  return line.reduce((a, t, i) => a + ctx.measureText(t.w).width + (i ? sp : 0), 0);
+}
+function balancedWrap(tokens, size, maxW) {
+  setFont(size, 800);
+  const n = tokens.length; if (!n) return [];
+  const widths = tokens.map(t => ctx.measureText(t.w).width), sp = ctx.measureText(' ').width;
+  const dp = Array(n + 1).fill(Infinity), nxt = Array(n).fill(n); dp[n] = 0;
+  for (let i = n - 1; i >= 0; i--) {
+    let w = 0;
+    for (let j = i; j < n; j++) {
+      w += widths[j] + (j > i ? sp : 0);
+      if (w > maxW && j > i) break;
+      const last = j === n - 1, full = Math.min(w / maxW, 1);
+      let pen = Math.pow(1 - full, 2) * (last ? .2 : 1.3);
+      if (last && full < .3) pen += .4;
+      if (!last && tokens[j].w.replace(/[^\p{L}\p{N}]/gu, '').length <= 2) pen += .45;
+      if (w > maxW) pen += 5;
+      const sc = pen + dp[j + 1] + .13;
+      if (sc < dp[i]) { dp[i] = sc; nxt[i] = j + 1; }
+    }
+  }
+  const lines = []; for (let i = 0; i < n;) { const j = nxt[i]; lines.push(tokens.slice(i, j)); i = j; }
+  return lines;
+}
+// Testo del consiglio: righe a capo greedy con parole evidenziate in grassetto; null = spazio tra paragrafi.
+function wrapRich(paras, size, maxW) {
+  setFont(size, 500); const sp = ctx.measureText(' ').width, out = [];
+  const wd = t => { setFont(size, t.hl ? 800 : 500); return ctx.measureText(t.w).width; };
+  for (const toks of paras) {
+    if (!toks.length) { if (out.length && out[out.length - 1] !== null) out.push(null); continue; }
+    let line = [], w = 0;
+    for (const t of toks) {
+      const ww = wd(t);
+      if (line.length && w + sp + ww > maxW) {
+        // niente parole cortissime (≤2 lettere) a fine riga
+        const lastT = line[line.length - 1];
+        if (line.length > 1 && lastT.w.replace(/[^\p{L}\p{N}]/gu, '').length <= 2) { line.pop(); out.push(line); line = [lastT, t]; w = wd(lastT) + sp + ww; }
+        else { out.push(line); line = [t]; w = ww; }
+      } else { w += (line.length ? sp : 0) + ww; line.push(t); }
+    }
+    if (line.length) out.push(line);
+    out.push(null);
+  }
+  while (out.length && out[out.length - 1] === null) out.pop();
+  return out;
+}
+function upperTokens(str) { return parseMarkup(str).map(t => ({ ...t, w: state.upper ? t.w.toLocaleUpperCase('it') : t.w })); }
+// Titolo: riduce il corpo finché sta nello spazio disponibile.
+function fitTitle(tokens, cfg, mode) {
+  const manual = mode !== 'auto', minK = cfg.min / cfg.max; let k = manual ? Number(mode) : 1, r;
+  for (;;) {
+    const size = cfg.max * k, lines = balancedWrap(tokens, size, cfg.width); setFont(size, 800);
+    const wide = lines.some(l => lineWidth(l) > cfg.width + 1), lead = size * cfg.lead, tot = lines.length * lead;
+    r = { lines, size, lead, total: tot, wide, overflow: tot > cfg.avail || wide, empty: !tokens.length };
+    if (manual || !r.overflow || k <= minK + 1e-6) break;
+    k = Math.max(minK, k - .02);
+  }
+  return r;
+}
+function fitBody(text, mode) {
+  const paras = parseParas(text), cfg = { max: 40, min: 22, avail: BODY_BOTTOM - BODY_TOP };
+  const manual = mode !== 'auto', minK = cfg.min / cfg.max; let k = manual ? Number(mode) : 1, r;
+  for (;;) {
+    const size = Math.max(20, cfg.max * k), lead = size * 1.5, lines = wrapRich(paras, size, TW);
+    const tot = lines.reduce((a, l) => a + (l === null ? lead * .55 : lead), 0);
+    r = { lines, size, lead, total: tot, overflow: tot > cfg.avail, empty: !lines.length };
+    if (manual || !r.overflow || k <= minK + 1e-6) break;
+    k = Math.max(minK, k - .02);
+  }
+  return r;
+}
+const coverCfg = { max: 72, min: 38, avail: 360, width: TW, lead: 1.14 };
+const headCfg = { max: 56, min: 28, avail: 140, width: TW, lead: 1.14 };
+const tipCfg = { max: 66, min: 34, avail: 175, width: W - MX - TIP_TX, lead: 1.1 };
+
+/* ---------- Disegno ---------- */
+function badge() {
+  if (state.icon === 'none') return;
+  ctx.save(); ctx.translate(82, 91);
+  ctx.fillStyle = 'rgba(7,18,31,.93)'; ctx.beginPath(); ctx.arc(0, 0, 57, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = C.teal; ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(0, 0, 57, 0, Math.PI * 2); ctx.stroke();
+  ctx.strokeStyle = C.white; ctx.lineWidth = 6; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  if (state.icon === 'star') {
+    ctx.beginPath();
+    for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, r = i % 2 ? 14 : 34; ctx[i ? 'lineTo' : 'moveTo'](Math.cos(a) * r, Math.sin(a) * r + 2); }
+    ctx.closePath(); ctx.stroke();
+  } else {   // lampadina
+    ctx.beginPath(); ctx.moveTo(-13, 11); ctx.bezierCurveTo(-27, 0, -25, -24, 0, -27); ctx.bezierCurveTo(25, -24, 27, 0, 13, 11); ctx.lineTo(13, 19); ctx.lineTo(-13, 19); ctx.closePath(); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-8, 29); ctx.lineTo(8, 29); ctx.stroke();
+  }
+  ctx.restore();
+}
+function drawLogo(im, fg, dark) {
+  const right = W - MX, cy = FOOT_Y, h = 33;
+  if (im) {   // logo caricato: viene colorato per restare leggibile sullo sfondo
+    const hh = 40, ww = im.width / im.height * hh, c = document.createElement('canvas'); c.width = Math.round(ww); c.height = hh;
+    const x = c.getContext('2d'); x.drawImage(im, 0, 0, c.width, c.height); x.globalCompositeOperation = 'source-in'; x.fillStyle = fg; x.fillRect(0, 0, c.width, c.height);
+    ctx.drawImage(c, right - ww, cy - hh / 2); return right - ww;
+  }
+  const src = dark ? brand.light : brand.dark;
+  if (!src) return right - 250;
+  const w = src.width / src.height * h; ctx.save(); ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(src, right - w, cy - h / 2, w, h); ctx.restore(); return right - w;
+}
+function footer(lg, fg, dark) {
+  const x = drawLogo(lg, fg, dark);
+  ctx.fillStyle = fg; ctx.fillRect(MX, FOOT_Y - 1, Math.max(40, x - 34 - MX), 2);
+}
+function centered(lines, size, lead, y0, colors) {
+  setFont(size, 800); ctx.textAlign = 'left';
+  const sp = ctx.measureText(' ').width; let y = y0;
+  for (const line of lines) {
+    let x = (W - lineWidth(line)) / 2; const base = y + (lead + size * .7) / 2;
+    for (const t of line) { ctx.fillStyle = t.hl ? colors[1] : colors[0]; ctx.fillText(t.w, x, base); x += ctx.measureText(t.w).width + sp; }
+    y += lead;
+  }
+}
+function leftLines(lines, size, lead, x0, y0, colors) {
+  setFont(size, 800); ctx.textAlign = 'left';
+  const sp = ctx.measureText(' ').width; let y = y0;
+  for (const line of lines) {
+    let x = x0; const base = y + (lead + size * .7) / 2;
+    for (const t of line) { ctx.fillStyle = t.hl ? colors[1] : colors[0]; ctx.fillText(t.w, x, base); x += ctx.measureText(t.w).width + sp; }
+    y += lead;
+  }
+}
+
+// Zona scura in alto con taglio diagonale e tre fasce (azzurro chiaro, blu notte, azzurro).
+function darkZone([yl, yr]) {
+  ctx.save();
+  ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(W, 0); ctx.lineTo(W, yr); ctx.lineTo(0, yl); ctx.closePath(); ctx.clip();
+  const g = ctx.createLinearGradient(0, 0, 0, yl); g.addColorStop(0, '#0c2238'); g.addColorStop(1, C.deep); ctx.fillStyle = g; ctx.fillRect(0, 0, W, yl);
+  const rg = ctx.createRadialGradient(540, 0, 30, 540, 0, 760); rg.addColorStop(0, 'rgba(43,147,182,.30)'); rg.addColorStop(1, 'rgba(43,147,182,0)'); ctx.fillStyle = rg; ctx.fillRect(0, 0, W, yl);
+  ctx.restore();
+  const band = (d1, d2, c) => poly([[0, yl - d2], [W, yr - d2], [W, yr - d1], [0, yl - d1]], c);
+  band(21, 30, C.light); band(12, 21, '#0b1a2c'); band(0, 12, C.teal);
+}
+function drawCover(im, lg) {
+  ctx.fillStyle = C.white; ctx.fillRect(0, 0, W, H);
+  darkZone(DIV_COVER); badge();
+  const s = state.cover;
+  // immagine piccola opzionale in alto a destra
+  if (im || s.showPh) {
+    const pw = 224, ph = 224, px = W - MX - pw, py = 54;
+    ctx.save(); ctx.beginPath(); ctx.roundRect(px, py, pw, ph, 26); ctx.clip();
+    if (im) {
+      const sc = Math.max(pw / im.width, ph / im.height) * (s.zoom / 100), iw = im.width * sc, ih = im.height * sc;
+      ctx.drawImage(im, px + (pw - iw) * s.posX / 100, py + (ph - ih) * s.posY / 100, iw, ih);
+    }
+    ctx.restore();
+    ctx.strokeStyle = C.teal; ctx.lineWidth = 6; ctx.beginPath(); ctx.roundRect(px, py, pw, ph, 26); ctx.stroke();
+  }
+  // numero
+  ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'center';
+  const num = numText(), nsize = num.length > 3 ? 220 : num.length > 2 ? 280 : 340;
+  setFont(nsize, 900); ctx.fillStyle = C.white; ctx.fillText(num, W / 2, 100 + nsize * .86);
+  // etichetta "CONSIGLI" (parallelogramma)
+  const bx = 150, bw = 780, by = 455, bh = 128, k = Math.tan(8 * Math.PI / 180) * bh / 2;
+  poly([[bx + k, by], [bx + bw + k, by], [bx + bw - k, by + bh], [bx - k, by + bh]], C.teal);
+  setFont(86, 900); spacing(4); ctx.fillStyle = C.white; ctx.fillText('CONSIGLI', W / 2 + 2, by + bh / 2 + 31); spacing(0);
+  // raccordo
+  const lead = (state.lead || '').trim();
+  if (lead) { setFont(48, 500); spacing(3); ctx.fillStyle = C.light; ctx.fillText(state.upper ? lead.toLocaleUpperCase('it') : lead, W / 2 + 1.5, 656); spacing(0); }
+  // titolo
+  const L = fitTitle(upperTokens(s.title), coverCfg, s.tfont);
+  centered(L.lines, L.size, L.lead, 850, [C.navy, C.teal]);
+  footer(lg, C.navy, false);
+  return { L, info: `titolo ${Math.round(L.size)}px` };
+}
+
+function drawTip(i, lg) {
+  const t = state.tips[i];
+  ctx.fillStyle = C.white; ctx.fillRect(0, 0, W, H);
+  darkZone(DIV_TIP); badge();
+  ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
+  const lead = (state.lead || '').trim(), small = `${numText()} CONSIGLI ${state.upper ? lead.toLocaleUpperCase('it') : lead}`.trim();
+  setFont(34, 800); spacing(2); ctx.fillStyle = C.light; ctx.fillText(small, 170, 103); spacing(0);
+  const HL = fitTitle(upperTokens(state.cover.title), headCfg, state.cover.tfont);
+  leftLines(HL.lines, HL.size, HL.lead, MX, 200 + (headCfg.avail - HL.total) / 2 - 8, [C.white, '#7cc4e0']);
+
+  // numero nell'anello
+  ctx.strokeStyle = C.teal; ctx.lineWidth = 8; ctx.beginPath(); ctx.arc(RING.x, RING.y, RING.r - 4, 0, Math.PI * 2); ctx.stroke();
+  const n = String(i + 1); setFont(n.length > 1 ? 68 : 90, 900); ctx.fillStyle = C.navy; ctx.textAlign = 'center'; ctx.fillText(n, RING.x, RING.y + (n.length > 1 ? 24 : 32));
+  // titolo del consiglio
+  const TL = fitTitle(upperTokens(t.title), tipCfg, t.tfont);
+  leftLines(TL.lines, TL.size, TL.lead, TIP_TX, RING.y - TL.total / 2, [C.navy, C.teal]);
+  // testo
+  const B = fitBody(t.body, t.bfont);
+  ctx.textAlign = 'left'; let y = BODY_TOP; const sp = (setFont(B.size, 500), ctx.measureText(' ').width);
+  for (const line of B.lines) {
+    if (line === null) { y += B.lead * .55; continue; }
+    let x = MX; const base = y + (B.lead + B.size * .7) / 2;
+    for (const tk of line) { setFont(B.size, tk.hl ? 800 : 500); ctx.fillStyle = tk.hl ? C.teal : C.navy; ctx.fillText(tk.w, x, base); x += ctx.measureText(tk.w).width + sp; }
+    y += B.lead;
+  }
+  footer(lg, C.navy, false);
+  return { TL, B, HL, info: `titolo ${Math.round(TL.size)}px · testo ${Math.round(B.size)}px` };
+}
+
+async function paint(i, guard) {
+  const [im, lg] = await Promise.all([i === 0 ? imageOf(state.cover.photo) : null, imageOf(state.logo), brandReady]);
+  if (guard !== undefined && guard !== rid) return null;
+  ctx.clearRect(0, 0, W, H);
+  if (i === 0) { const r = drawCover(im, lg); return { kind: 'cover', ...r, overflow: r.L.overflow, empty: r.L.empty }; }
+  const r = drawTip(i - 1, lg);
+  return { kind: 'tip', ...r, overflow: r.TL.overflow || r.B.overflow || r.HL.overflow, empty: r.TL.empty };
+}
+function draw() {
+  if (exporting) return;
+  const g = ++rid;
+  paint(active, g).then(r => {
+    if (!r) return;
+    if (r.kind === 'cover') {
+      if (r.empty) setStatus('Inserisci il titolo di copertina', true);
+      else if (r.overflow) setStatus('Titolo troppo lungo: accorcialo', true);
+      else setStatus(`${r.L.lines.length} righe · ${r.info}` + (state.cover.photo ? '' : ' · nessuna immagine (opzionale)'));
+    } else {
+      if (r.empty) setStatus('Inserisci il titolo del consiglio', true);
+      else if (r.HL.overflow) setStatus('Il titolo di copertina è troppo lungo per l’intestazione', true);
+      else if (r.overflow) setStatus('Testo troppo lungo: accorcia il titolo o il testo', true);
+      else setStatus(r.info);
+    }
+  });
+}
+
+/* ---------- Interfaccia ---------- */
+function buildTabs() {
+  const el = $('tabs'); el.innerHTML = '';
+  for (let i = 0; i < total(); i++) {
+    const b = document.createElement('button'); b.className = 'tab' + (i === active ? ' active' : '');
+    b.innerHTML = i === 0 ? 'Apertura<small>Copertina</small>' : `Consiglio ${i}<small>${(state.tips[i - 1].title || '').replace(/\*/g, '').slice(0, 14) || 'vuoto'}</small>`;
+    b.onclick = () => { active = i; refresh(); }; el.appendChild(b);
+  }
+}
+function buildChips() {
+  const el = $('chips'); el.innerHTML = '';
+  const tokens = parseMarkup(cur().title);
+  tokens.forEach(t => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'chip' + (t.hl ? ' on' : ''); b.textContent = t.w;
+    b.onclick = () => { t.hl = !t.hl; cur().title = serialize(tokens); $('title').value = cur().title; buildChips(); draw(); };
+    el.appendChild(b);
+  });
+}
+function buildBodyChips() {
+  const el = $('bchips'); el.innerHTML = ''; if (isCover()) return;
+  const paras = parseParas(cur().body);
+  paras.forEach(p => p.forEach(t => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'chip' + (t.hl ? ' on' : ''); b.textContent = t.w;
+    b.onclick = () => { t.hl = !t.hl; cur().body = serializeParas(paras); $('body').value = cur().body; buildBodyChips(); draw(); };
+    el.appendChild(b);
+  }));
+}
+function refresh() {
+  const s = cur(), cov = isCover();
+  buildTabs();
+  $('name').value = state.name; $('lead').value = state.lead; $('number').value = state.number; $('upper').checked = state.upper; $('icon').value = state.icon;
+  $('numHint').textContent = 'Attualmente: ' + numText();
+  $('coverOnly').classList.toggle('hidden', !cov); $('bodyField').classList.toggle('hidden', cov); $('bfontField').classList.toggle('hidden', cov);
+  $('titleLabel').textContent = cov ? 'Titolo di copertina (compare anche in alto su tutte le slide)' : 'Titolo del consiglio';
+  $('tfLabel').textContent = cov ? 'Dimensione titolo' : 'Dimensione titolo del consiglio';
+  $('tfont').value = s.tfont; $('bfont').value = s.bfont || 'auto';
+  if (cov) { $('zoom').value = s.zoom; $('posX').value = s.posX; $('posY').value = s.posY; }
+  else $('body').value = s.body;
+  $('title').value = s.title; $('photo').value = '';
+  $('charcount').textContent = s.title.replace(/\*/g, '').length + ' caratteri';
+  $('bcount').textContent = cov ? '' : s.body.replace(/\*/g, '').length + ' caratteri';
+  $('previewLabel').textContent = cov ? 'Apertura' : `Consiglio ${active} di ${state.tips.length}`;
+  $('delSlide').disabled = cov; $('moveL').disabled = cov || active === 1; $('moveR').disabled = cov || active === state.tips.length; $('dupSlide').disabled = cov;
+  buildChips(); buildBodyChips(); draw();
+}
+const bindState = (id, key, fn = v => v, ev = 'input') => $(id)[ev === 'change' ? 'onchange' : 'oninput'] = e => { state[key] = fn(e.target.type === 'checkbox' ? e.target.checked : e.target.value); if (key === 'number') $('numHint').textContent = 'Attualmente: ' + numText(); draw(); };
+bindState('name', 'name'); bindState('lead', 'lead'); bindState('number', 'number'); bindState('upper', 'upper', Boolean, 'change'); bindState('icon', 'icon', v => v, 'change');
+const bindSlide = (id, key, fn = v => v, ev = 'input') => $(id)[ev === 'change' ? 'onchange' : 'oninput'] = e => { cur()[key] = fn(e.target.value); draw(); };
+bindSlide('tfont', 'tfont', v => v, 'change'); bindSlide('bfont', 'bfont', v => v, 'change');
+['zoom', 'posX', 'posY'].forEach(k => bindSlide(k, k, Number));
+$('title').oninput = e => { cur().title = e.target.value; $('charcount').textContent = e.target.value.replace(/\*/g, '').length + ' caratteri'; buildChips(); if (!isCover()) buildTabs(); draw(); };
+$('body').oninput = e => { cur().body = e.target.value; $('bcount').textContent = e.target.value.replace(/\*/g, '').length + ' caratteri'; buildBodyChips(); draw(); };
+
+async function pickImage(input, apply, max, mime, q) {
+  const f = input.files && input.files[0]; if (!f) return;
+  if (!f.type.startsWith('image/')) return alert('Seleziona un file immagine.');
+  try { apply(await loadFile(f, max, mime, q)); } catch (err) { alert(err.message); }
+  input.value = ''; draw();
+}
+$('photo').onchange = e => pickImage(e.target, d => state.cover.photo = d, 1600, 'image/jpeg', .92);
+$('logo').onchange = e => pickImage(e.target, d => state.logo = d, 600, 'image/png');
+$('photoDel').onclick = () => { state.cover.photo = ''; draw(); };
+$('logoReset').onclick = () => { state.logo = ''; draw(); };
+
+$('addSlide').onclick = () => { if (state.tips.length >= MAX_TIPS) return alert('Massimo 20 slide per gallery.'); state.tips.push(newTip()); active = state.tips.length; refresh(); };
+$('dupSlide').onclick = () => { if (isCover() || state.tips.length >= MAX_TIPS) return; state.tips.splice(active, 0, JSON.parse(JSON.stringify(cur()))); active++; refresh(); };
+$('delSlide').onclick = () => { if (isCover()) return; if (!confirm('Eliminare il consiglio ' + active + '?')) return; state.tips.splice(active - 1, 1); active = Math.min(active, state.tips.length); refresh(); };
+const move = d => { if (isCover()) return; const a = active - 1, b = a + d; if (b < 0 || b >= state.tips.length) return; [state.tips[a], state.tips[b]] = [state.tips[b], state.tips[a]]; active += d; refresh(); };
+$('moveL').onclick = () => move(-1); $('moveR').onclick = () => move(1);
+$('prev').onclick = () => { active = (active + total() - 1) % total(); refresh(); };
+$('next').onclick = () => { active = (active + 1) % total(); refresh(); };
+
+/* ---------- Esportazione ---------- */
+function downloadBlob(blob, name) { const a = document.createElement('a'), u = URL.createObjectURL(blob); a.href = u; a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(u), 20000); }
+const jpg = () => new Promise(r => canvas.toBlob(r, 'image/jpeg', .94));
+function cleanName() { return (state.name || 'consigli').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/gi, '_').replace(/^_|_$/g, '').toLowerCase() || 'consigli'; }
+async function loadFonts() { try { await Promise.all([300, 400, 500, 700, 800, 900].map(w => document.fonts.load(`${w} 40px Montserrat`))); await document.fonts.ready; } catch (e) { } }
+
+$('exportOne').onclick = async () => { await loadFonts(); await paint(active); downloadBlob(await jpg(), `${cleanName()}_${String(active + 1).padStart(2, '0')}.jpg`); draw(); };
+$('exportAll').onclick = async e => {
+  const miss = []; if (!state.cover.title.trim()) miss.push('titolo copertina'); 
+  state.tips.forEach((t, i) => { if (!t.title.trim()) miss.push('titolo consiglio ' + (i + 1)); if (!t.body.trim()) miss.push('testo consiglio ' + (i + 1)); });
+  if (miss.length && !confirm('Mancano: ' + miss.join(', ') + '.\n\nEsportare comunque?')) return;
+  const b = e.target; b.disabled = true; b.textContent = 'Preparazione ZIP…'; exporting = true;
+  try {
+    await loadFonts(); const entries = [];
+    for (let i = 0; i < total(); i++) {
+      await paint(i); const blob = await jpg();
+      entries.push({ name: `${cleanName()}_${String(i + 1).padStart(2, '0')}.jpg`, data: new Uint8Array(await blob.arrayBuffer()) });
+    }
+    downloadBlob(zip(entries), `gallery_${cleanName()}.zip`);
+  } catch (err) { alert('Errore durante l’esportazione: ' + err.message); }
+  finally { exporting = false; b.disabled = false; b.textContent = 'Esporta gallery ZIP'; draw(); }
+};
+
+/* ---------- Salvataggio progetto ---------- */
+$('save').onclick = () => downloadBlob(new Blob([JSON.stringify({ version: 1, type: 'consigli', ...state }, null, 2)], { type: 'application/json' }), `progetto_consigli_${cleanName()}.json`);
+$('loadBtn').onclick = () => $('load').click();
+$('load').onchange = async e => {
+  const f = e.target.files && e.target.files[0]; if (!f) return;
+  try {
+    const d = JSON.parse(await f.text());
+    if (d.type !== 'consigli' || !d.cover || !Array.isArray(d.tips)) throw Error('non è un progetto Consigli valido');
+    state = {
+      name: String(d.name || 'consigli'), lead: String(d.lead ?? 'PER…'), number: String(d.number || ''), upper: d.upper !== false, logo: d.logo || '', icon: ['bulb', 'star', 'none'].includes(d.icon) ? d.icon : 'bulb',
+      cover: { title: '', photo: '', zoom: 100, posX: 50, posY: 50, tfont: 'auto', ...d.cover },
+      tips: d.tips.slice(0, MAX_TIPS).map(t => newTip(t))
+    };
+    cache.clear(); active = 0; refresh();
+  } catch (err) { alert('Impossibile aprire il progetto: ' + err.message); }
+  e.target.value = '';
+};
+
+/* ---------- ZIP senza librerie (STORE) ---------- */
+const crcTable = (() => { const t = []; for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+function crc32(bytes) { let c = 0xffffffff; for (const b of bytes) c = crcTable[(c ^ b) & 255] ^ (c >>> 8); return (c ^ 0xffffffff) >>> 0; }
+function zip(entries) {
+  const enc = new TextEncoder(), parts = [], central = []; let offset = 0;
+  for (const { name, data: d } of entries) {
+    const n = enc.encode(name), crc = crc32(d), local = new Uint8Array(30 + n.length), v = new DataView(local.buffer);
+    v.setUint32(0, 0x04034b50, true); v.setUint16(4, 20, true); v.setUint32(14, crc, true); v.setUint32(18, d.length, true); v.setUint32(22, d.length, true); v.setUint16(26, n.length, true); local.set(n, 30);
+    parts.push(local, d);
+    const cent = new Uint8Array(46 + n.length), cv = new DataView(cent.buffer);
+    cv.setUint32(0, 0x02014b50, true); cv.setUint16(4, 20, true); cv.setUint16(6, 20, true); cv.setUint32(16, crc, true); cv.setUint32(20, d.length, true); cv.setUint32(24, d.length, true); cv.setUint16(28, n.length, true); cv.setUint32(42, offset, true); cent.set(n, 46);
+    central.push(cent); offset += local.length + d.length;
+  }
+  const size = central.reduce((a, c) => a + c.length, 0), end = new Uint8Array(22), ev = new DataView(end.buffer);
+  ev.setUint32(0, 0x06054b50, true); ev.setUint16(8, entries.length, true); ev.setUint16(10, entries.length, true); ev.setUint32(12, size, true); ev.setUint32(16, offset, true);
+  return new Blob([...parts, ...central, end], { type: 'application/zip' });
+}
+
+loadFonts().then(refresh); refresh();
+</script>
+</body>
+</html>
