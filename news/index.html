@@ -81,7 +81,7 @@ footer{font-size:11px;color:#648094;padding:0 24px 25px;max-width:1470px;margin:
       <p class="hint">Stesso cerchio (dimensione, posizione e colori) del format Interviste, che usa il microfono: serve a mantenere uniforme il profilo Instagram.</p></div>
     <div class="field"><label>Logo in basso a destra (opzionale)</label>
       <input type="file" id="logo" accept="image/*"> <button class="btn alt" id="logoReset" style="padding:7px 10px;margin-left:6px">Usa quello standard</button>
-      <p class="hint">Se non carichi nulla viene usato un logo ASSOPOKER vettoriale. Meglio un PNG bianco con sfondo trasparente.</p></div>
+      <p class="hint">Se non carichi nulla viene usato il logo ASSOPOKER originale (versione bianca). Un logo caricato deve essere un PNG con sfondo trasparente, pensato per fondo scuro.</p></div>
     <div class="notice">Il testo si ridimensiona da solo in base alla lunghezza e cresce verso l'alto, ancorato al fondo: non devi più sistemare nulla a mano. Per evidenziare in azzurro, clicca sulle parole sotto al titolo.</div>
   </div>
 
@@ -90,6 +90,7 @@ footer{font-size:11px;color:#648094;padding:0 24px 25px;max-width:1470px;margin:
     <div class="slide-tabs" id="tabs"></div>
     <div class="actions slide-actions">
       <button class="btn alt" id="addSlide">+ Aggiungi</button>
+      <button class="btn alt" id="addCta">+ CTA finale</button>
       <button class="btn alt" id="dupSlide">Duplica</button>
       <button class="btn alt" id="moveL">◀ Sposta</button>
       <button class="btn alt" id="moveR">Sposta ▶</button>
@@ -98,19 +99,19 @@ footer{font-size:11px;color:#648094;padding:0 24px 25px;max-width:1470px;margin:
 
     <div class="row">
       <div class="field"><label for="layout">Tipo di slide</label>
-        <select id="layout"><option value="cover">Copertina · solo titolo</option><option value="text">Approfondimento · titolo + testo</option></select></div>
+        <select id="layout"><option value="cover">Solo titolo (con etichetta)</option><option value="nolabel">Solo titolo, senza etichetta</option><option value="text">Titolo + testo</option><option value="cta">CTA finale · mockup computer + sito</option></select></div>
       <div class="field"><label for="fontmode">Dimensione testo</label>
         <select id="fontmode"><option value="auto">Automatica (consigliata)</option><option value="1">Massima</option><option value="0.88">Grande</option><option value="0.76">Media</option><option value="0.64">Piccola</option><option value="0.52">Minima</option></select></div>
     </div>
 
-    <div class="field"><label>Fotografia</label><input type="file" id="photo" accept="image/*"></div>
+    <div class="field"><label id="photoLabel">Fotografia</label><input type="file" id="photo" accept="image/*"></div>
     <div class="row">
       <div class="field"><label>Zoom</label><input type="range" id="zoom" min="100" max="250" value="100"></div>
       <div class="field"><label>Posizione orizzontale</label><input type="range" id="posX" min="0" max="100" value="50"></div>
       <div class="field"><label>Posizione verticale</label><input type="range" id="posY" min="0" max="100" value="50"></div>
     </div>
 
-    <div class="field"><label>Etichetta di questa slide (vuoto = usa quella generale)</label><input type="text" id="slabel" placeholder="Lascia vuoto per usare l'etichetta generale"></div>
+    <div class="field" id="slabelField"><label>Etichetta di questa slide (vuoto = usa quella generale)</label><input type="text" id="slabel" placeholder="Lascia vuoto per usare l'etichetta generale"></div>
 
     <div class="field"><label>Titolo</label>
       <textarea id="title" placeholder="Scrivi qui il titolo…"></textarea>
@@ -118,7 +119,7 @@ footer{font-size:11px;color:#648094;padding:0 24px 25px;max-width:1470px;margin:
       <p class="hint">Clicca sulle parole per evidenziarle in azzurro (oppure scrivile tra asterischi: *così*). <span id="charcount"></span></p>
     </div>
 
-    <div class="field" id="bodyField"><label>Testo di approfondimento</label>
+    <div class="field" id="bodyField"><label id="bodyLabel">Testo di approfondimento</label>
       <textarea id="body" style="min-height:130px" placeholder="Scrivi qui il testo. Un invio = nuovo paragrafo."></textarea></div>
 
     <details>
@@ -167,6 +168,26 @@ const W = 1080, H = 1350;
 const canvas = $('canvas'), ctx = canvas.getContext('2d');
 const C = { deep: '#07121f', navy: '#0a1b2e', teal: '#2b93b6', white: '#ffffff' };
 const FONT = 'Montserrat, Arial, sans-serif';
+
+/* ---------- Logo ASSOPOKER originale (PNG bianco a due toni) + versione scura ricavata da esso ---------- */
+const BRAND_SRC = 'data:image/png;base64,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';
+const brand = { light: null, dark: null };
+const brandReady = new Promise(res => {
+  const im = new Image();
+  im.onload = () => {
+    brand.light = im;
+    const c = document.createElement('canvas'); c.width = im.width; c.height = im.height;
+    const x = c.getContext('2d'); x.drawImage(im, 0, 0);
+    const d = x.getImageData(0, 0, c.width, c.height), p = d.data;
+    for (let i = 0; i < p.length; i += 4) {   // bianco -> blu notte, grigio dei segmenti -> grigio-azzurro
+      const f = Math.min(1, Math.max(0, (p[i] - 178) / 77));
+      p[i] = Math.round(138 + (10 - 138) * f); p[i + 1] = Math.round(151 + (27 - 151) * f); p[i + 2] = Math.round(163 + (46 - 163) * f);
+    }
+    x.putImageData(d, 0, 0); brand.dark = c; res();
+  };
+  im.onerror = () => res(); im.src = BRAND_SRC;
+});
+
 const MX = 67, TW = W - MX * 2;      // margini laterali e larghezza utile del testo
 const BOTTOM = 1240;                  // fondo del blocco di testo (ancoraggio)
 const FOOT_Y = 1292;                  // linea del footer e centro del logo
@@ -182,7 +203,8 @@ let state = {
   name: 'news', label: 'NEWS ANSA', fade: 92, upper: true, logo: '', icon: 'paper',
   slides: [
     newSlide({ title: '*NUOVI GUAI* COL *FISCO* PER *ENRICO CAMOSCI:* CONTESTATA DALLA GDF LA SUA *RESIDENZA* A *MALTA*' }),
-    newSlide({ layout: 'text', title: 'IL *CONTESTO* DELLA VICENDA', body: 'Inserisci qui il testo di approfondimento.\nIl carattere si adatta automaticamente alla lunghezza: se scrivi di più il testo si rimpicciolisce, se scrivi meno si ingrandisce.' })
+    newSlide({ layout: 'text', title: 'IL *CONTESTO* DELLA VICENDA', body: 'Inserisci qui il testo di approfondimento.\nIl carattere si adatta automaticamente alla lunghezza: se scrivi di più il testo si rimpicciolisce, se scrivi meno si ingrandisce.' }),
+    newSlide({ layout: 'cta', posY: 0, title: 'LEGGI L’ARTICOLO COMPLETO', body: 'ASSOPOKER.COM' })
   ]
 };
 let active = 0, exporting = false, rid = 0;
@@ -300,7 +322,8 @@ function layoutFor(s) {
   const tokens = parseMarkup(s.title).map(t => ({ ...t, w: state.upper ? t.w.toLocaleUpperCase('it') : t.w }));
   const cfg = s.layout === 'text'
     ? { tMax: 62, tMin: 32, bMax: 34, avail: 700 }
-    : { tMax: 78, tMin: 40, bMax: 0, avail: 540 };
+    : s.layout === 'cta' ? { tMax: 64, tMin: 38, bMax: 0, avail: 205 }
+    : { tMax: 78, tMin: 40, bMax: 0, avail: s.layout === 'nolabel' ? 630 : 540 };
   const manual = s.fontmode !== 'auto', minK = cfg.tMin / cfg.tMax;
   let k = manual ? Number(s.fontmode) : 1, r;
   for (;;) {
@@ -365,27 +388,70 @@ function badge() {
   }
   ctx.restore();
 }
+// Slide CTA finale: titolo + mockup di computer con lo screenshot dell'articolo + pulsante verso il sito.
+function drawCTA(L, im, st, s) {
+  const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#0c2238'); g.addColorStop(1, C.deep); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  const rg = ctx.createRadialGradient(540, 720, 40, 540, 720, 640); rg.addColorStop(0, 'rgba(43,147,182,.40)'); rg.addColorStop(1, 'rgba(43,147,182,0)'); ctx.fillStyle = rg; ctx.fillRect(0, 0, W, H);
+  badge();
+  // titolo centrato
+  ctx.textBaseline = 'alphabetic'; setFont(L.tSize, 800);
+  const sp = ctx.measureText(' ').width; let y = 192 + (205 - L.total) / 2;
+  for (const line of L.lines) {
+    const lw = line.reduce((a, t, i) => a + ctx.measureText(t.w).width + (i ? sp : 0), 0); let x = (W - lw) / 2; const base = y + (L.tLead + L.tSize * .7) / 2;
+    ctx.textAlign = 'left'; for (const t of line) { ctx.fillStyle = t.hl ? C.teal : C.white; ctx.fillText(t.w, x, base); x += ctx.measureText(t.w).width + sp; }
+    y += L.tLead;
+  }
+  // computer
+  const dw = 892, dh = 570, dx = (W - dw) / 2, dy = 432, bz = 16, sx = dx + bz, sy = dy + bz, sw = dw - bz * 2, sh = dh - bz * 2, bar = 42;
+  const rr = (x, yy, w, h, r) => { ctx.beginPath(); ctx.roundRect(x, yy, w, h, r); };
+  ctx.save(); ctx.fillStyle = 'rgba(0,0,0,.4)'; ctx.shadowColor = 'rgba(0,0,0,.55)'; ctx.shadowBlur = 40; ctx.shadowOffsetY = 26; rr(dx + 40, 1018, dw - 80, 10, 6); ctx.fill(); ctx.restore();
+  const bg = ctx.createLinearGradient(0, dy, 0, dy + dh); bg.addColorStop(0, '#2d384b'); bg.addColorStop(1, '#141c2a');
+  ctx.fillStyle = bg; rr(dx, dy, dw, dh, 26); ctx.fill(); ctx.strokeStyle = 'rgba(255,255,255,.16)'; ctx.lineWidth = 2; rr(dx + 1, dy + 1, dw - 2, dh - 2, 26); ctx.stroke();
+  ctx.fillStyle = '#0a111c'; ctx.beginPath(); ctx.arc(W / 2, dy + 8, 3.2, 0, Math.PI * 2); ctx.fill();
+  ctx.save(); rr(sx, sy, sw, sh, 10); ctx.clip();
+  ctx.fillStyle = '#ffffff'; ctx.fillRect(sx, sy, sw, sh);
+  const ax = sx, ay = sy + bar, aw = sw, ah = sh - bar;
+  if (im) {
+    const sc = Math.max(aw / im.width, ah / im.height) * (s.zoom / 100), iw = im.width * sc, ih = im.height * sc;
+    ctx.save(); ctx.beginPath(); ctx.rect(ax, ay, aw, ah); ctx.clip(); ctx.drawImage(im, ax + (aw - iw) * s.posX / 100, ay + (ah - ih) * s.posY / 100, iw, ih); ctx.restore();
+  } else {
+    const pg = ctx.createLinearGradient(ax, ay, ax + aw, ay + ah); pg.addColorStop(0, '#16415f'); pg.addColorStop(1, '#2b7f9c'); ctx.fillStyle = pg; ctx.fillRect(ax, ay, aw, ah);
+    ctx.fillStyle = '#ffffffc0'; ctx.textAlign = 'center'; setFont(26, 600); ctx.fillText('CARICA LO SCREENSHOT DELL’ARTICOLO', W / 2, ay + ah / 2 + 9);
+  }
+  ctx.fillStyle = '#e6ebf0'; ctx.fillRect(sx, sy, sw, bar); ctx.fillStyle = '#d3dae1'; ctx.fillRect(sx, sy + bar - 1, sw, 1);
+  [['#ff5f57', 26], ['#febc2e', 48], ['#28c840', 70]].forEach(([c, o]) => { ctx.fillStyle = c; ctx.beginPath(); ctx.arc(sx + o, sy + bar / 2, 6, 0, Math.PI * 2); ctx.fill(); });
+  ctx.fillStyle = '#ffffff'; rr(sx + 110, sy + 8, sw - 220, 26, 13); ctx.fill();
+  ctx.fillStyle = '#35506a'; ctx.textAlign = 'center'; setFont(15, 600); ctx.fillText('assopoker.com', W / 2, sy + 26);
+  ctx.restore();
+  // base del computer
+  const by = dy + dh - 3, bg2 = ctx.createLinearGradient(0, by, 0, by + 26); bg2.addColorStop(0, '#d5dbe2'); bg2.addColorStop(1, '#8c96a2');
+  ctx.fillStyle = bg2; ctx.beginPath(); ctx.roundRect(dx - 64, by, dw + 128, 26, [3, 3, 18, 18]); ctx.fill();
+  ctx.fillStyle = '#a2acb7'; ctx.beginPath(); ctx.roundRect(W / 2 - 72, by, 144, 9, [0, 0, 8, 8]); ctx.fill();
+  sticker(st, s);
+  // pulsante
+  const label = (s.body || '').trim() || 'ASSOPOKER.COM';
+  ctx.textAlign = 'left'; setFont(38, 800); const txt = state.upper ? label.toLocaleUpperCase('it') : label, arrow = '  →';
+  const tw = ctx.measureText(txt + arrow).width, pw = tw + 100, ph = 88, px = (W - pw) / 2, py = 1086;
+  ctx.save(); ctx.shadowColor = 'rgba(43,147,182,.55)'; ctx.shadowBlur = 30; ctx.shadowOffsetY = 8; ctx.fillStyle = C.teal; rr(px, py, pw, ph, ph / 2); ctx.fill(); ctx.restore();
+  ctx.fillStyle = C.white; ctx.fillText(txt + arrow, px + 50, py + ph / 2 + 13);
+}
 function drawLogo(im) {
-  const right = W - MX, cy = FOOT_Y;
-  if (im) { const h = 46, w = im.width / im.height * h; ctx.drawImage(im, right - w, cy - h / 2, w, h); return right - w; }
-  ctx.save(); setFont(31, 800); ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
-  const tw = ctx.measureText('ASSOPOKER').width, x0 = right - tw - 58;
-  // fiche stilizzata
-  const cx = x0 + 24;
-  ctx.fillStyle = C.white; ctx.beginPath(); ctx.ellipse(cx, cy, 24, 18, 0, 0, Math.PI * 2); ctx.fill();
-  ctx.fillStyle = C.deep;
-  for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4; ctx.beginPath(); ctx.ellipse(cx + Math.cos(a) * 20, cy + Math.sin(a) * 15, 4.2, 3.2, a, 0, Math.PI * 2); ctx.fill(); }
-  ctx.beginPath(); ctx.ellipse(cx, cy, 13, 9.5, 0, 0, Math.PI * 2); ctx.fill();
-  ctx.fillStyle = C.white; ctx.beginPath(); ctx.ellipse(cx, cy, 9, 6.2, 0, 0, Math.PI * 2); ctx.fill();
-  ctx.fillText('ASSOPOKER', x0 + 58, cy + 11);
-  ctx.restore(); return x0;
+  const right = W - MX, cy = FOOT_Y, h = 33, src = im || brand.light;
+  if (!src) return right - 250;
+  const w = src.width / src.height * h; ctx.save(); ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(src, right - w, cy - h / 2, w, h); ctx.restore(); return right - w;
 }
 async function paint(i, guard) {
   const s = state.slides[i];
-  const [im, st, lg] = await Promise.all([imageOf(s.photo), imageOf(s.sticker), imageOf(state.logo)]);
+  const [im, st, lg] = await Promise.all([imageOf(s.photo), imageOf(s.sticker), imageOf(state.logo), brandReady]);
   if (guard !== undefined && guard !== rid) return null;
   ctx.clearRect(0, 0, W, H); ctx.fillStyle = C.deep; ctx.fillRect(0, 0, W, H);
-  const L = layoutFor(s), label = (s.label.trim() || state.label.trim()), lh = label ? LABEL_H : 0;
+  if (s.layout === 'cta') {
+    const Lc = layoutFor(s); drawCTA(Lc, im, st, s);
+    const lx = drawLogo(lg); ctx.fillStyle = C.white; ctx.fillRect(MX, FOOT_Y - 1, Math.max(40, lx - 34 - MX), 2);
+    return { L: Lc, label: '' };
+  }
+  const L = layoutFor(s), label = s.layout === 'nolabel' ? '' : (s.label.trim() || state.label.trim()), lh = label ? LABEL_H : 0;
   const top = BOTTOM - L.total, blockTop = top - lh;
 
   photoFill(im, s); fade(blockTop); sticker(st, s); badge();
@@ -433,7 +499,7 @@ function buildTabs() {
   const el = $('tabs'); el.innerHTML = '';
   state.slides.forEach((s, i) => {
     const b = document.createElement('button'); b.className = 'tab' + (i === active ? ' active' : '');
-    b.innerHTML = `Slide ${i + 1}<small>${s.layout === 'cover' ? 'Copertina' : 'Testo'}</small>`;
+    b.innerHTML = `Slide ${i + 1}<small>${{ cover: 'Con etichetta', nolabel: 'Senza etichetta', text: 'Titolo + testo', cta: 'CTA finale' }[s.layout] || ''}</small>`;
     b.onclick = () => { active = i; refresh(); }; el.appendChild(b);
   });
 }
@@ -453,7 +519,10 @@ function refresh() {
   $('layout').value = s.layout; $('fontmode').value = s.fontmode;
   $('zoom').value = s.zoom; $('posX').value = s.posX; $('posY').value = s.posY;
   $('slabel').value = s.label; $('title').value = s.title; $('body').value = s.body;
-  $('bodyField').classList.toggle('hidden', s.layout !== 'text');
+  const isCta = s.layout === 'cta';
+  $('bodyField').classList.toggle('hidden', s.layout !== 'text' && !isCta); $('slabelField').classList.toggle('hidden', s.layout === 'nolabel' || isCta);
+  $('bodyLabel').textContent = isCta ? 'Testo del pulsante (vuoto = ASSOPOKER.COM)' : 'Testo di approfondimento';
+  $('body').style.minHeight = isCta ? '48px' : '130px'; $('photoLabel').textContent = isCta ? 'Screenshot dell’articolo (mostrato nello schermo del computer)' : 'Fotografia';
   $('stScale').value = s.stScale; $('stRot').value = s.stRot; $('stX').value = s.stX; $('stY').value = s.stY;
   $('photo').value = ''; $('sticker').value = '';
   $('charcount').textContent = s.title.replace(/\*/g, '').length + ' caratteri';
@@ -465,7 +534,7 @@ bindState('name', 'name'); bindState('label', 'label'); bindState('fade', 'fade'
 const bindSlide = (id, key, fn = v => v, ev = 'input') => $(id)[ev === 'change' ? 'onchange' : 'oninput'] = e => { cur()[key] = fn(e.target.value); draw(); };
 bindSlide('fontmode', 'fontmode', v => v, 'change'); bindSlide('slabel', 'label');
 ['zoom', 'posX', 'posY', 'stScale', 'stRot', 'stX', 'stY'].forEach(k => bindSlide(k, k, Number));
-$('layout').onchange = e => { cur().layout = e.target.value; refresh(); };
+$('layout').onchange = e => { const sl = cur(); sl.layout = e.target.value; if (sl.layout === 'cta') { if (sl.posY === 50) sl.posY = 0; if (!sl.title.trim()) sl.title = 'LEGGI L’ARTICOLO COMPLETO'; } refresh(); };
 $('title').oninput = e => { cur().title = e.target.value; $('charcount').textContent = e.target.value.replace(/\*/g, '').length + ' caratteri'; buildChips(); draw(); };
 $('body').oninput = e => { cur().body = e.target.value; draw(); };
 
@@ -481,6 +550,7 @@ $('logo').onchange = e => pickImage(e.target, d => state.logo = d, 600, 'image/p
 $('stickerDel').onclick = () => { cur().sticker = ''; draw(); };
 $('logoReset').onclick = () => { state.logo = ''; draw(); };
 
+$('addCta').onclick = () => { if (state.slides.length >= 10) return alert('Massimo 10 slide per gallery.'); state.slides.push(newSlide({ layout: 'cta', posY: 0, title: 'LEGGI L’ARTICOLO COMPLETO', body: 'ASSOPOKER.COM' })); active = state.slides.length - 1; refresh(); };
 $('addSlide').onclick = () => { if (state.slides.length >= 10) return alert('Massimo 10 slide per gallery.'); state.slides.push(newSlide({ layout: 'text' })); active = state.slides.length - 1; refresh(); };
 $('dupSlide').onclick = () => { if (state.slides.length >= 10) return alert('Massimo 10 slide per gallery.'); state.slides.splice(active + 1, 0, JSON.parse(JSON.stringify(cur()))); active++; refresh(); };
 $('delSlide').onclick = () => { if (state.slides.length < 2) return alert('Serve almeno una slide.'); if (!confirm('Eliminare la slide ' + (active + 1) + '?')) return; state.slides.splice(active, 1); active = Math.min(active, state.slides.length - 1); refresh(); };
